@@ -1,16 +1,16 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
 
-typedef struct s_stack
-{
-    long            nbr;
-    long            index;
-    struct s_stack  *next;
-    struct s_stack  *prev;
-}   t_stack;
+/*
+COSAS QUE FALTAN:
+	-falta hacer  el parseo que tendri que ser lo primero dado que no pueden meter los numeros asi "32   23     3"
+	-falta resolver todos los errores del añadir el numero a la lista:
+		-parsea todos los numeros de arg a long.
+		- y de mas.
 
+*/
+
+# include "push_swap.h"
+
+// Esta funcion se encuentra en la libft tambien
 int	ft_isdigit(int c)
 {
 	if (c >= 48 && c <= 57)
@@ -22,7 +22,7 @@ int	ft_isdigit(int c)
 		return (0);
 	}
 }
-
+//Es  como un atoi pero te devuelve un long en  vez de un int  
 long	ft_strlong(const char *str)
 {
 	long	result;
@@ -75,11 +75,11 @@ int isnumber (const char *str)
             return(0);
         str++;
     }
-    return (1);
+    return (-1);
 }
 
 // Verifica que los numeros no se repitan 
-int verificiar (int argc, char *argv[])
+int checkerArg (int argc, char *argv[])
 {
     int     i;
     int     y;
@@ -108,10 +108,85 @@ int verificiar (int argc, char *argv[])
 // A FALTA DE MAS PRUEBAS FALTA HACER EL PARSEO POR SI UN PARAMETRO ME VIENE ASI "4343 45   545 "
 int main(int argc, char *argv[]) 
 {
-  int i = verificiar(argc, argv);
+	t_stack *stacka;
+  	int i; 
+  	i = checker_arg(argc, argv);
+  	if(i == 6)
+    	return(-1);
+	stacka = enter_data(argc, argv);
+	while(stacka->next != NULL)
+	{
+		printf("%ld ", stacka->nbr);
+		stacka = stacka->next;
+	}
   return (i);
 }
 
+t_stack *enter_data(int argc, char *argv[])
+{
+    t_stack *stacka;
+	t_stack *new;
+	int i;
+	int index;
+	t_stack *prev;
+
+	i = 1;
+	index = 0;
+	new = ft_lstnew((long)argv[i], index, NULL);
+	if(stacka == NULL)
+		return (NULL);
+	prev = stacka;
+	while(++i < argc)
+	{
+		index++;
+		new = ft_lstnew(argv[i], index, prev);
+		while(prev->next != NULL)
+			prev = prev->next;
+		ft_lstadd_back(stacka, new);
+		
+	}
+    return (stacka);
+}
+
+t_stack	*ft_lstnew(void *content, int index, t_stack *before)
+{
+	t_stack	*node;
+
+	node = (t_stack *)malloc(sizeof(t_stack));
+	if (node == NULL)
+		return (NULL);
+	node->nbr = content;
+    node->index = index;
+	node->next = NULL;
+    node->prev = before;
+	return (node);
+}
+
+void	ft_lstadd_back(t_stack **lst, t_stack *new)
+{
+	t_stack	*temp;
+
+	if (!new)
+		return ;
+	if (*lst == NULL)
+		*lst = new;
+	else
+	{
+		temp = *lst;
+		while (temp->next != NULL)
+			temp = temp->next;
+		temp->next = new;
+	}
+}
+
+void	ft_lstadd_front(t_stack **lst, t_stack *new)
+{
+	if (new != NULL)
+	{
+		new->next = *lst;
+		*lst = new;
+	}
+}
 /*
 int main2() {
     // Crear nodos de la lista
