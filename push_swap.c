@@ -10,173 +10,6 @@ COSAS QUE FALTAN:
 
 # include "push_swap.h"
 
-// Esta funcion se encuentra en la libft tambien
-char	*ft_strchr(const char *s, int c)
-{
-	while (*s != '\0')
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
-	}
-	if ((char)c == '\0')
-		return ((char *)s);
-	return (NULL);
-}
-size_t	ft_strlen(const char *s)
-{
-	int	count;
-
-	count = 0;
-	while (s[count] != '\0')
-	{
-		count++;
-	}
-	return (count);
-}
-void	*ft_calloc(size_t count, size_t size)
-{
-	unsigned char	*str;
-	size_t			i;
-	size_t			len;
-
-	len = count * size;
-	str = malloc(len);
-	i = 0;
-	if (str == 0)
-		return (0);
-	while (len--)
-	{
-		str[i] = '\0';
-		i++;
-	}
-	return (str);
-}
-char	*ft_strdup(const char *s1)
-{
-	char	*str;
-	size_t	len;
-
-	len = ft_strlen(s1);
-	str = malloc((len + 1) * sizeof(char));
-	len = 0;
-	if (str == 0)
-		return (0);
-	while (s1[len])
-	{
-		str[len] = s1[len];
-		len++;
-	}
-	str[len] = '\0';
-	return (str);
-}
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	size_t	length;
-	char	*str;
-	size_t	i;
-
-	if (!s)
-		return (0);
-	length = ft_strlen(s);
-	if (start >= length)
-		return (ft_strdup(""));
-	if (length < len + start)
-		len = length - start;
-	str = ft_calloc(len + 1, sizeof(char));
-	if (!str)
-		return (0);
-	i = 0;
-	while (i < len)
-	{
-		str[i] = s[start + i];
-		i++;
-	}
-	return (str);
-}
-//Aqui empieza el split
-static	size_t	ft_wordcount(char const *s, char c)
-{
-	size_t	count;
-
-	if (!*s)
-		return (0);
-	count = 0;
-	while (*s)
-	{
-		while (*s == c)
-			s++;
-		if (*s)
-			count++;
-		while (*s != c && *s)
-			s++;
-	}
-	return (count);
-}
-
-static	void	ft_freelst(char **lst, int i)
-{
-	while (i >= 0)
-		free(lst[i--]);
-	free (lst);
-}
-
-static	char	**ft_wordsplit(char **lst, char const *s, char c, int i)
-{
-	size_t	wlen;
-
-	while (*s)
-	{
-		while (*s == c && *s)
-			s++;
-		if (*s)
-		{
-			if (!ft_strchr(s, c))
-				wlen = ft_strlen(s);
-			else
-				wlen = ft_strchr(s, c) - s;
-			lst[i] = ft_substr(s, 0, wlen);
-			if (lst[i] == NULL)
-			{
-				ft_freelst(lst, i - 1);
-				return (NULL);
-			}
-			s += wlen;
-			i++;
-		}
-	}
-	lst[i] = NULL;
-	return (lst);
-}
-
-char	**ft_split(char const *s, char c)
-{
-	char	**lst;
-	int		i;
-
-	i = 0;
-	lst = malloc((ft_wordcount(s, c) + 1) * sizeof(char *));
-	if (!s || !lst)
-		return (NULL);
-	lst = ft_wordsplit(lst, s, c, i);
-	if (!lst)
-		return (NULL);
-	else
-		return (lst);
-}
-//aqui termina el split
-
-int	ft_isdigit(int c)
-{
-	if (c >= 48 && c <= 57)
-	{
-		return (1);
-	}
-	else
-	{
-		return (0);
-	}
-}
 //Es  como un atoi pero te devuelve un long en  vez de un int  
 long	ft_strlong(const char *str)
 {
@@ -203,21 +36,7 @@ long	ft_strlong(const char *str)
 	return (result * sig);
 }
 
-// Esta de aqui lo suyo seria utilizar la libft ya que se encuentra en ella.
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	unsigned int	i;
-
-	if (n == 0)
-		return (0);
-	i = 0;
-	while ((s1[i] != '\0' || s2[i] != '\0') && s1[i] == s2[i] && n - 1 > i)
-	{
-		i++;
-	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-int isnumber (const char *str)
+int ft_isnumber (const char *str)
 {
     while(*str == ' '|| (*str >= '\t' && *str <= '\r'))
         str++;
@@ -279,57 +98,60 @@ int	parseo (int argc, char *argv[])
 	}
 	return (count);
 }
-void sacarstring(int argc, char *argv[], long *argi) {
-    int i;
-    int y; 
-	int z;
-	char **tmp;
 
-	i = 1;
-	z = 0;
+int contains_space(const char *str) {
+    while (*str) {
+        if (*str == ' ') return 1;
+        str++;
+    }
+    return 0;
+}
+// toca revisar esta funcion ya que al meter parametros como string me detecta que no es numero 
+// y me salta error y si bajo el ft_isnumber me da error por tipos ya que recibe un char
+int sacarstring(int argc, char *argv[], long *argi) 
+{
+    int i = 1; 
+	int z = 0; 
+	int j;
+    char **tmp;
+
     while (i < argc) {
-        char *temp = argv[i];
-		y = 0;
-        while(temp[y] != '\0')
+        if (contains_space(argv[i])) 
 		{
-			if (temp[y++] == ' ')
+            tmp = ft_split(argv[i], ' ');
+			if (tmp == NULL)
+				return (write(1, "Error\n", 6));
+            j = 0;
+            while (tmp[j]) 
 			{
-				tmp = ft_split(temp, ' ');
-				y = 0;
-				while(tmp[y] != NULL)
-				{
-					argi[z++] = ft_strlong(tmp[y]);
-					free(tmp[y]);
-					y++;
-				}
-				free(tmp);
-				break;
-			}
-		}
-        argi[z++] = ft_strlong(temp);
+                argi[z++] = ft_strlong(tmp[j]);
+                free(tmp[j++]);
+            }
+            free(tmp);
+        } else 
+            argi[z++] = ft_strlong(argv[i]);
+		if (!ft_isnumber(argi[i])) 
+            return (write(1, "Error\n", 6));
         i++;
     }
+	return (0);
 }
 // Verifica que los numeros no se repitan 
-int checker_arg (int argc, char *argv[])
+int checker_arg (int count, long argi[])
 {
     int     i;
     int     y;
-    long    num;
 
-    i = 1;
-    while(i < argc)
+
+    i = 0;
+    while(i < count -1)
     {
-        num = isnumber(argv[i]);
-        if(num == 0)
-            return(write(1, "Error\n", 6));
-        num = ft_strlong(argv[i]);
-        if (num < -2147483648 || num > 2147483647)
+        if (argi[i] < -2147483648 || argi[i] > 2147483647)
             return (write(1, "Error\n", 6));
         y = i;
-        while(++y < argc)
+        while(++y < count)
         {
-            if ( ft_strncmp(argv[i], argv[y], 11) == 0)
+            if (argi[i] == argi[y])
                 return (write(1, "Error\n", 6));
         }
         i++;
@@ -337,26 +159,26 @@ int checker_arg (int argc, char *argv[])
     return (0);
 }
 
-// A FALTA DE MAS PRUEBAS FALTA HACER EL PARSEO POR SI UN PARAMETRO ME VIENE ASI "4343 45   545 "
 int main(int argc, char *argv[]) 
 {
 	//t_stack *stacka;
   	int i;
+	int count;
 	long *argi;
-	i = parseo (argc, argv) + 1;
+	count = parseo (argc, argv) + 1;
 	//printf ("%d", i);
-	argi = malloc(i * sizeof(long));
+	argi = malloc(count * sizeof(long));
 	if(argi == NULL)
 		return(-1);
-	sacarstring(argc, argv, argi);
-		int j = 0;
-	while (j < i - 1) {
+	if (sacarstring(argc, argv, argi) == 6)
+		return (-1);
+	int j = 0;
+	while (j < count - 1) {
 		printf("%ld ", argi[j]);
 		j++;
 	}
 	printf("\n");
-		
-  	i = checker_arg(argc, argv);
+  	i = checker_arg(count, argi);
   	if(i == 6)
     	return(-1);
 	/*
@@ -404,33 +226,5 @@ t_stack	*ft_stcknew(void *content, int index)
 	node->next = NULL;
 
 	return (node);
-}
-*/
-/*
-int main2() {
-    // Crear nodos de la lista
-    t_stack *node1 = (t_stack *)malloc(sizeof(t_stack));
-    t_stack *node2 = (t_stack *)malloc(sizeof(t_stack));
-
-    // Inicializar nodos
-    node1->nbr = 10;
-    node1->index = 1;
-    node1->next = node2;
-    node1->prev = NULL;
-
-    node2->nbr = 20;
-    node2->index = 2;
-    node2->next = NULL;
-    node2->prev = node1;
-
-    // Acceder a los datos
-    printf("Node 1: nbr = %ld, index = %ld\n", node1->nbr, node1->index);
-    printf("Node 2: nbr = %ld, index = %ld\n", node2->nbr, node2->index);
-
-    // Liberar memoria
-    free(node1);
-    free(node2);
-
-    return 0;
 }
 */
