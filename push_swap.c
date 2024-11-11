@@ -36,7 +36,7 @@ long	ft_strlong(const char *str)
 	return (result * sig);
 }
 
-int ft_isnumber (const char *str)
+long ft_isnumber (const char *str)
 {
     while(*str == ' '|| (*str >= '\t' && *str <= '\r'))
         str++;
@@ -108,40 +108,46 @@ int contains_space(const char *str) {
 }
 // toca revisar esta funcion ya que al meter parametros como string me detecta que no es numero 
 // y me salta error y si bajo el ft_isnumber me da error por tipos ya que recibe un char
-int sacarstring(int argc, char *argv[], long *argi) 
-{
-    int i = 1; 
-	int z = 0; 
-	int j;
+int store_numbers(char **tmp, long *argi, int *z) {
+    int j = 0;
+
+    while (tmp[j]) {
+        if (!ft_isnumber(tmp[j])) {
+            while (tmp[j])
+                free(tmp[j++]);
+            free(tmp);
+            return (-1);
+        }
+        argi[(*z)++] = ft_strlong(tmp[j]);
+        free(tmp[j++]);
+    }
+    free(tmp);
+    return (0);
+}
+
+int sacarstring(int argc, char *argv[], long *argi) {
+    int i = 1, z = 0;
     char **tmp;
 
     while (i < argc) {
-        if (contains_space(argv[i])) 
-		{
+        if (contains_space(argv[i])) {
             tmp = ft_split(argv[i], ' ');
-			if (tmp == NULL)
-				return (write(1, "Error\n", 6));
-            j = 0;
-            while (tmp[j]) 
-			{
-                argi[z++] = ft_strlong(tmp[j]);
-                free(tmp[j++]);
-            }
-            free(tmp);
-        } else 
+            if (tmp == NULL || store_numbers(tmp, argi, &z) == -1)
+                return (write(1, "Error\n", 6));
+        } else {
+            if (!ft_isnumber(argv[i]))
+                return (write(1, "Error\n", 6));
             argi[z++] = ft_strlong(argv[i]);
-		if (!ft_isnumber(argi[i])) 
-            return (write(1, "Error\n", 6));
+        }
         i++;
     }
-	return (0);
+    return (0);
 }
 // Verifica que los numeros no se repitan 
 int checker_arg (int count, long argi[])
 {
     int     i;
     int     y;
-
 
     i = 0;
     while(i < count -1)
@@ -158,13 +164,17 @@ int checker_arg (int count, long argi[])
     }
     return (0);
 }
-
+// Haay que revisarla ya que no podemos si las dan errores o algo hay que liberar bien
+// la memoria
 int main(int argc, char *argv[]) 
 {
-	//t_stack *stacka;
+	t_stack *stacka;
+	t_stack *header;
   	int i;
 	int count;
 	long *argi;
+
+	stacka = NULL;
 	count = parseo (argc, argv) + 1;
 	//printf ("%d", i);
 	argi = malloc(count * sizeof(long));
@@ -172,59 +182,47 @@ int main(int argc, char *argv[])
 		return(-1);
 	if (sacarstring(argc, argv, argi) == 6)
 		return (-1);
-	int j = 0;
-	while (j < count - 1) {
-		printf("%ld ", argi[j]);
-		j++;
-	}
-	printf("\n");
   	i = checker_arg(count, argi);
   	if(i == 6)
     	return(-1);
-	/*
-	stacka = enter_data(argc, argv);
+	
+	header = enter_data(count, argi, &stacka);
 	while(stacka->next != NULL)
 	{
 		printf("%ld ", stacka->nbr);
 		stacka = stacka->next;
 	}
-	*/
+	printf ("\n%p", header);
 free(argi);
   return (i);
 }
-/*
-t_stack *enter_data(int argc, char *argv[])
+
+t_stack *enter_data(int count, long *argvi, t_stack **stacka)
 {
-    t_stack *stacka;
 	t_stack *node;
+	t_stack *former;
+	t_stack *header;
 	int i;
 
-	i = 1;
-		node = ft_stcknew(argv[i], i);
-		if (node == NULL)
-			return (NULL);
-		
-	while (i < argc)
-	{
-		node = ft_stcknew(argv[i], i);
-		if (node == NULL)
-			return (NULL);
-		
-	}
-
-    return (stacka);
-}
-t_stack	*ft_stcknew(void *content, int index)
-{
-	t_stack *node;
-
-	node = (t_stack *)malloc(sizeof(t_stack));
+	i = 0;
+	node = ft_stcknew(argvi[i], i);
 	if (node == NULL)
-		return (NULL);
-	node->nbr = content;
-	node->index = index;
-	node->next = NULL;
-
-	return (node);
+		return (NULL);	
+	former = node;
+	header = node;
+	*stacka = header;
+	while (++i < count) 
+    {
+        node = ft_stcknew(argvi[i], i);
+        if (node == NULL)
+		{
+			ft_stckclear(stacka);
+			return (NULL);
+		}
+        ft_stckadd_back(stacka, node, former);
+        former = node;
+    }
+    return (header);
 }
-*/
+
+
