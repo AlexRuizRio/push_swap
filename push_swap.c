@@ -165,7 +165,7 @@ int checker_arg (int count, long argi[])
     return (0);
 }
 // Haay que revisarla ya que no podemos si las dan errores o algo hay que liberar bien
-// la memoria
+// la memoria y tambien falta cerrar la lista a la cabecera
 int main(int argc, char *argv[]) 
 {
 	t_stack *stacka;
