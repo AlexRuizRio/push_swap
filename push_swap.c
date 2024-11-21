@@ -106,8 +106,7 @@ int contains_space(const char *str) {
     }
     return 0;
 }
-// toca revisar esta funcion ya que al meter parametros como string me detecta que no es numero 
-// y me salta error y si bajo el ft_isnumber me da error por tipos ya que recibe un char
+
 int store_numbers(char **tmp, long *argi, int *z) {
     int j = 0;
 
@@ -164,7 +163,7 @@ int checker_arg (int count, long argi[])
     }
     return (0);
 }
-// Haay que revisarla ya que no podemos si las dan errores o algo hay que liberar bien
+// Hay que revisarla ya que no podemos si las dan errores o algo hay que liberar bien
 // la memoria y tambien falta cerrar la lista a la cabecera
 int main(int argc, char *argv[]) 
 {
@@ -193,7 +192,7 @@ int main(int argc, char *argv[])
 		stacka = stacka->next;
 	}
 	printf ("\n%p", header);
-free(argi);
+	free(argi);
   return (i);
 }
 

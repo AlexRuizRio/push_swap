@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:06:42 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/11/11 22:00:30 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/11/21 18:11:51 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_stckadd_back(t_stack **lst, t_stack *new, t_stack *former)
 	}
 }
 
-void	ft_stckclear(t_stack**lst)
+void	ft_stckclear(t_stack **lst)
 {
 	t_stack	*tem;
 
@@ -52,8 +52,6 @@ void	ft_stckclear(t_stack**lst)
 	{
 		tem = *lst;
 		*lst = (*lst)->next;
-		free(tem->nbr);
-        free(tem->index);
-		free(tem);
+		free(tem); 
 	}
 }
