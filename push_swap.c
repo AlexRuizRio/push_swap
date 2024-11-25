@@ -186,12 +186,15 @@ int main(int argc, char *argv[])
     	return(-1);
 	
 	header = enter_data(count, argi, &stacka);
+	
 	while(stacka->next != NULL)
 	{
 		printf("%ld ", stacka->nbr);
 		stacka = stacka->next;
 	}
-	printf ("\n%p", header);
+	printf ("\n%p \n", header);
+
+	mainquicksort(argi, count);
 	free(argi);
   return (i);
 }

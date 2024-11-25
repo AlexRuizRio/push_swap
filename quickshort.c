@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 19:05:32 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/11/21 19:08:06 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/11/25 17:49:45 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 
 // Quick sort in C
 
-void swap(int *a, int *b) {
+void swap(long *a, long *b) {
   int t = *a;
   *a = *b;
   *b = t;
 }
 
 
-int partition(int array[], int low, int high) 
+int partition(long array[], int low, int high) 
 {
   int pivot = array[high];
   
   int i = (low - 1);
 
 
-  for (int j = low; j < high; j++) {
+  for (int j = low; j < high; j++) { // cambiar esto
     if (array[j] <= pivot) {
       i++;
       swap(&array[i], &array[j]);
@@ -41,7 +41,7 @@ int partition(int array[], int low, int high)
   return (i + 1);
 }
 
-void quickSort(int array[], int low, int high) {
+void quickSort(long array[], int low, int high) {
   if (low < high) {
     int pi = partition(array, low, high);
 
@@ -51,18 +51,16 @@ void quickSort(int array[], int low, int high) {
   }
 }
 // Borrar al comprobar
-void printArray(int array[], int size) {
+void printArray(long array[], int size) {
   for (int i = 0; i < size; ++i) {
-    printf("%d  ", array[i]);
+    printf("%ld  ", array[i]);
   }
   printf("\n");
 }
 
 
-int mainquicksort() {
-  int data[] = {8, 7, 2, 1, 0, 9, 6};
+void mainquicksort(long data[], int n) {
   
-  int n = sizeof(data) / sizeof(data[0]);
   printArray(data, n);
   quickSort(data, 0, n - 1);
   printArray(data, n);

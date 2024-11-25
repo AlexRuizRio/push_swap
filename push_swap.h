@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:17:28 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/11/21 16:47:12 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/11/25 17:48:12 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ t_stack *enter_data(int count, long *argvi, t_stack **stacka);
 char	**ft_split(char const *s, char c); // revisar cuando meta la libft
 int		ft_isdigit(int c); // revisar cuando meta la libft
 void	ft_stckclear(t_stack**lst);
+void	mainquicksort(long data[], int n);
 
 #endif
