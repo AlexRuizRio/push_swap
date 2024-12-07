@@ -175,7 +175,6 @@ int main(int argc, char *argv[])
 
 	stacka = NULL;
 	count = parseo (argc, argv) + 1;
-	//printf ("%d", i);
 	argi = malloc(count * sizeof(long));
 	if(argi == NULL)
 		return(-1);
@@ -184,17 +183,16 @@ int main(int argc, char *argv[])
   	i = checker_arg(count, argi);
   	if(i == 6)
     	return(-1);
-	
 	header = enter_data(count, argi, &stacka);
 	
-	while(stacka->next != NULL)
+	while(stacka->next != NULL) // Comprobacion de que se añaden BORRAR
 	{
 		printf("%ld ", stacka->nbr);
 		stacka = stacka->next;
 	}
-	printf ("\n%p \n", header);
+	printf ("\n%p \n", header); // Comprobacion del puntero head // BORRAR 
 
-	mainquicksort(argi, count);
+	mainquicksort(argi, count); // Comprobacion de que ordena un array BORRAR
 	free(argi);
   return (i);
 }
