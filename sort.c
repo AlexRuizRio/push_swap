@@ -1,29 +1,70 @@
 
 #include "push_swap.h"
 
-void    sort(t_stack **s_stacka)
+
+void    sort(t_stack **stacka)
 {
-    t_stack *s_stackb;
+    t_stack *stackb;
     int i;
 
-    s_stackb = NULL;
-    if (ft_stcksize(s_stacka) == 2)
-        sa(s_stacka);
-    //continuar aqui
+    stackb = NULL;
+    if (ft_stcksize(stacka) == 2)
+        sa(stacka, 1);
+    else{
+		stackb = sort_b(stacka); //AQUI
+	}
         
     
 }
-int	ft_checksorted(t_stack *stack_a)
+int	checksorted(t_stack *stacka)
 {
 	int	i;
 
-	i = stack_a->nbr;
-	while (stack_a)
+	i = stacka->nbr;
+	while (stacka)
 	{
-		if (i > stack_a->nbr)
+		if (i > stacka->nbr)
 			return (0);
-		i = stack_a->nbr;
-		stack_a = stack_a->next;
+		i = stacka->nbr;
+		stacka = stacka->next;
 	}
 	return (1);
+}
+
+t_stack	*sort_b(t_stack **stacka)
+{
+	t_stack	*stackb;
+
+	stackb = NULL;
+	if (ft_stcksize(stacka) > 3 && !checksorted(stacka))
+			pb(stacka, stackb, 1);
+		if (ft_stcksize(stacka) > 3 && !checksorted(stacka))
+			pb(stacka, stackb, 1);
+		if (ft_stcksize(stacka) > 3 && !checksorted(stacka))
+			order_upto_3(stacka, &stackb);
+
+}
+
+void	order_upto_3(t_stack **stacka, t_stack **stackb)
+{
+	t_stack	*tmp;
+	int		i;
+
+	while (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
+	{
+		tmp = stacka;
+		i = best_option(*stacka, *stackb, 'b');
+	}
+	
+}
+
+int	best_option(t_stack *stacka, t_stack *stackb, char c)
+{
+	int		i;
+	t_stack	*tmp;
+
+	if (c == 'b')
+		tmp = stackb;
+	else if (c == 'a')
+		tmp = stacka;
 }
