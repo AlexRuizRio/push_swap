@@ -11,7 +11,7 @@ void    sort(t_stack **stacka)
     if (ft_stcksize(stacka) == 2)
         sa(stacka, 1);
     else{
-		stackb = sort_b(stacka); //AQUI
+		stackb = sort_b(stacka); //AQUI TOCA CONTINUAR
 	}
         
     
@@ -45,6 +45,8 @@ t_stack	*sort_b(t_stack **stacka)
 
 }
 
+// t_stack	**ft_sort_a(t_stack **stack_a, t_stack **stack_b)
+
 void	order_upto_3(t_stack **stacka, t_stack **stackb)
 {
 	t_stack	*tmp;
@@ -58,6 +60,7 @@ void	order_upto_3(t_stack **stacka, t_stack **stackb)
 	
 }
 
+// otro ARCHIVO Y PROBLAMENTE HAYA QUE HACER 2 ARCHIVOS UNO A Y OTRO B 
 int	best_option(t_stack *stacka, t_stack *stackb, char c)
 {
 	int		i;
@@ -67,4 +70,37 @@ int	best_option(t_stack *stacka, t_stack *stackb, char c)
 		tmp = stackb;
 	else if (c == 'a')
 		tmp = stacka;
+	while (tmp)
+	{
+		if (i > rarb_case (stacka, stackb, tmp->nbr))
+			i = rarb_case (stacka, stackb, tmp->nbr);
+		if (i > rrarrb_case ( stacka, stackb, tmp->nbr))
+			i = rrarrb_case ( stacka, stackb, tmp->nbr);
+		if (i > rarrb_case (stacka, stackb, tmp->nbr))
+			i = rarrb_case (stacka, stackb, tmp->nbr);
+		if (i > rrarb(stacka, stackb, tmp->nbr))
+			i = rrarb(stacka, stackb, tmp->nbr);
+		tmp = tmp->next;
+	}
+	return (i);
+	
+}
+
+// ARCHIVO CASE 
+
+
+// ARCHIVO UTILS
+
+int	index (t_stack *stacka, int nbr)
+{
+	int	i;
+
+	i = 0;
+	while ( stacka->nbr != nbr)
+	{
+		i++;
+		stacka = stacka->next;
+	}
+	stacka->index = 0;
+	return (i);
 }
