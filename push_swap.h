@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:17:28 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/07 14:24:24 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/12 00:54:36 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_stack *enter_data(int count, long *argvi, t_stack **stacka);
 char	**ft_split(char const *s, char c); // revisar cuando meta la libft
 int		ft_isdigit(int c); // revisar cuando meta la libft
 void	ft_stckclear(t_stack**lst);
+t_stack	*ft_stcklast(t_stack *lst);
 int		ft_stcksize(t_stack *lst);
 void	sa(t_stack **a, int j);
 void	sb(t_stack **b, int j);

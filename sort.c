@@ -104,3 +104,26 @@ int	index (t_stack *stacka, int nbr)
 	stacka->index = 0;
 	return (i);
 }
+
+int find_placeb (t_stack *stackb, int num)
+{
+	int		i;
+	t_stack	*tmp;
+
+	i = 1;
+	if (num > stackb->nbr && num < ft_stcklast(stackb)->nbr)
+	i = 0;
+	else if (num > max(stackb) || num < min(stackb))
+		i = index(stackb, max(stackb));
+	else
+	{
+		tmp = stackb->next;
+		while (stackb->nbr < num || tmp->nbr > num)
+		{
+			stackb = stackb->next;
+			tmp = stackb->next;
+			i++;
+		}
+	}
+	return(i);
+}
