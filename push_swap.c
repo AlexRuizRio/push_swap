@@ -184,7 +184,10 @@ int main(int argc, char *argv[])
   	if(i == 6)
     	return(-1);
 	header = enter_data(count, argi, &stacka);
-	
+	if (!checksorted(stacka))
+		sort(&stacka);
+
+	/*
 	while(stacka->next != NULL) // Comprobacion de que se añaden BORRAR
 	{
 		printf("%ld ", stacka->nbr);
@@ -193,6 +196,7 @@ int main(int argc, char *argv[])
 	printf ("\n%p \n", header); // Comprobacion del puntero head // BORRAR 
 
 	mainquicksort(argi, count); // Comprobacion de que ordena un array BORRAR
+	*/
 	free(argi);
   return (i);
 }

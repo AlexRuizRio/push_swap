@@ -55,21 +55,19 @@ void	order_upto_3(t_stack **stacka, t_stack **stackb)
 	while (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
 	{
 		tmp = stacka;
-		i = best_option(*stacka, *stackb, 'b');
+		i = best_option(*stacka, *stackb);
 	}
 	
 }
 
 // otro ARCHIVO Y PROBLAMENTE HAYA QUE HACER 2 ARCHIVOS UNO A Y OTRO B 
-int	best_option(t_stack *stacka, t_stack *stackb, char c)
+int	best_option(t_stack *stacka, t_stack *stackb)
 {
 	int		i;
 	t_stack	*tmp;
 
-	if (c == 'b')
-		tmp = stackb;
-	else if (c == 'a')
-		tmp = stacka;
+	tmp = stacka;
+	i = rrarrb_case(stacka, stackb, stacka->nbr);
 	while (tmp)
 	{
 		if (i > rarb_case (stacka, stackb, tmp->nbr))
@@ -78,8 +76,8 @@ int	best_option(t_stack *stacka, t_stack *stackb, char c)
 			i = rrarrb_case ( stacka, stackb, tmp->nbr);
 		if (i > rarrb_case (stacka, stackb, tmp->nbr))
 			i = rarrb_case (stacka, stackb, tmp->nbr);
-		if (i > rrarb(stacka, stackb, tmp->nbr))
-			i = rrarb(stacka, stackb, tmp->nbr);
+		if (i > rrarb_case(stacka, stackb, tmp->nbr))
+			i = rrarb_case(stacka, stackb, tmp->nbr);
 		tmp = tmp->next;
 	}
 	return (i);
@@ -87,11 +85,51 @@ int	best_option(t_stack *stacka, t_stack *stackb, char c)
 }
 
 // ARCHIVO CASE 
+int	rarb_case (t_stack *stacka, t_stack *stackb, int c)
+{
+	int i;
 
+	i = find_placeb(stackb, c);
+	if (i < ft_index(stacka, c))
+		i = ft_index (stacka, c);
+	return (i);
+}
+int	rrarrb_case (t_stack *stacka, t_stack *stackb, int c)
+{
+	int i;
 
+	i = 0;
+
+	if(find_placeb(stackb, c))
+		i = ft_stcksize(stackb) - find_placeb(stackb, c);
+	if ((i < (ft_stcksize(stacka) - find_placeb(stacka, c)) && ft_index(stacka, c)))
+	i = ft_stcksize(stacka) - ft_index(stacka,c);
+	return (i);
+}
+
+int	rrarb_case (t_stack *stacka, t_stack *stackb, int c)
+{
+	int i;
+
+	i = 0;
+	if (ft_index(stacka, c))
+		i = ft_stcksize(stacka) - ft_index (stacka, c);
+	i = find_placeb(stackb, c) + 1;
+	return (i);
+}
+int	rarrb_case (t_stack *stacka, t_stack *stackb, int c)
+{
+	int i;
+
+	i = 0;
+	if (find_placeb(stackb, c))
+		i = ft_stcksize(stackb) - find_placeb (stackb, c);
+	i = ft_index(stacka, c) + i;
+	return (i);
+}
 // ARCHIVO UTILS
 
-int	index (t_stack *stacka, int nbr)
+int	ft_index (t_stack *stacka, int nbr)
 {
 	int	i;
 
@@ -114,7 +152,7 @@ int find_placeb (t_stack *stackb, int num)
 	if (num > stackb->nbr && num < ft_stcklast(stackb)->nbr)
 	i = 0;
 	else if (num > max(stackb) || num < min(stackb))
-		i = index(stackb, max(stackb));
+		i = ft_index(stackb, max(stackb));
 	else
 	{
 		tmp = stackb->next;
@@ -126,4 +164,34 @@ int find_placeb (t_stack *stackb, int num)
 		}
 	}
 	return(i);
+}
+
+// int find_placea (t_stack *stacka, int num)
+
+int	min(t_stack *ab)
+{
+	int i;
+
+	i = ab->nbr;
+	while(ab)
+	{
+		if (ab->nbr < i)
+			i = ab->nbr;
+		ab = ab->next;
+	}
+	return (i);
+}
+
+int	max(t_stack *ab)
+{
+	int i;
+
+	i = ab->nbr;
+	while(ab)
+	{
+		if (ab->nbr > i)
+			i = ab->nbr;
+		ab = ab->next;
+	}
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:06:42 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/12 00:27:41 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:13:58 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,17 @@ t_stack	*ft_stcklast(t_stack *lst)
 	while (lst->next != NULL)
 		lst = lst->next;
 	return (lst);
+}
+
+int	ft_stcksize(t_stack *lst)
+{
+	size_t	i;
+
+	i = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
 }

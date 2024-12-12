@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:17:28 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/12 00:54:36 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:58:39 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ int		ft_isdigit(int c); // revisar cuando meta la libft
 void	ft_stckclear(t_stack**lst);
 t_stack	*ft_stcklast(t_stack *lst);
 int		ft_stcksize(t_stack *lst);
+int	checksorted(t_stack *stacka);
+void    sort(t_stack **stacka);
+t_stack	*sort_b(t_stack **stacka);
 void	sa(t_stack **a, int j);
 void	sb(t_stack **b, int j);
 void	ss(t_stack **a, t_stack **b, int j);
@@ -50,6 +53,14 @@ void	rr(t_stack **a, t_stack **b, int j);
 void	rra(t_stack **a, int j);
 void	rrb(t_stack **b, int j);
 void	ft_rrr_b(t_stack **b, int j);
+int	rarb_case (t_stack *stacka, t_stack *stackb, int c);
+int	rrarrb_case (t_stack *stacka, t_stack *stackb, int c);
+int	rrarb_case (t_stack *stacka, t_stack *stackb, int c);
+int	rarrb_case (t_stack *stacka, t_stack *stackb, int c);
+int		ft_index (t_stack *stacka, int nbr);
+int 	find_placeb (t_stack *stackb, int num);
+int	min(t_stack *ab);
+int	max(t_stack *ab);
 void	mainquicksort(long data[], int n);
 
 #endif
