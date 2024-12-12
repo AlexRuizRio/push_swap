@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/12 19:09:34 by alruiz-d          #+#    #+#             */
+/*   Updated: 2024/12/12 20:01:26 by alruiz-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "push_swap.h"
 
@@ -8,7 +20,7 @@ void    sort(t_stack **stacka)
     int i;
 
     stackb = NULL;
-    if (ft_stcksize(stacka) == 2)
+    if (ft_stcksize(*stacka) == 2)
         sa(stacka, 1);
     else{
 		stackb = sort_b(stacka); //AQUI TOCA CONTINUAR
@@ -34,15 +46,16 @@ int	checksorted(t_stack *stacka)
 t_stack	*sort_b(t_stack **stacka)
 {
 	t_stack	*stackb;
-
+	
 	stackb = NULL;
-	if (ft_stcksize(stacka) > 3 && !checksorted(stacka))
-			pb(stacka, stackb, 1);
-		if (ft_stcksize(stacka) > 3 && !checksorted(stacka))
-			pb(stacka, stackb, 1);
-		if (ft_stcksize(stacka) > 3 && !checksorted(stacka))
-			order_upto_3(stacka, &stackb);
-
+	if (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
+		pb(stacka, &stackb, 1);
+	if (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
+		write(1, "dwdwdwd", 7);
+		pb(stacka, &stackb, 1);
+	if (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
+		order_upto_3(stacka, &stackb);
+	return (stackb);
 }
 
 // t_stack	**ft_sort_a(t_stack **stack_a, t_stack **stack_b)
@@ -52,12 +65,14 @@ void	order_upto_3(t_stack **stacka, t_stack **stackb)
 	t_stack	*tmp;
 	int		i;
 
+	i = best_option(*stacka, *stackb); // Acabar esta funcion
+	/*
 	while (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
 	{
 		tmp = stacka;
 		i = best_option(*stacka, *stackb);
 	}
-	
+	*/
 }
 
 // otro ARCHIVO Y PROBLAMENTE HAYA QUE HACER 2 ARCHIVOS UNO A Y OTRO B 
@@ -68,17 +83,31 @@ int	best_option(t_stack *stacka, t_stack *stackb)
 
 	tmp = stacka;
 	i = rrarrb_case(stacka, stackb, stacka->nbr);
+	printf ("El rrarrb da: %d", i);
 	while (tmp)
 	{
 		if (i > rarb_case (stacka, stackb, tmp->nbr))
+		{
 			i = rarb_case (stacka, stackb, tmp->nbr);
+			printf ("El rarb da: %d", i);
+		}
 		if (i > rrarrb_case ( stacka, stackb, tmp->nbr))
+		{
 			i = rrarrb_case ( stacka, stackb, tmp->nbr);
+			printf ("El rrarrb da: %d", i);
+		}
 		if (i > rarrb_case (stacka, stackb, tmp->nbr))
+		{
 			i = rarrb_case (stacka, stackb, tmp->nbr);
+			printf ("El rarrb da: %d", i);
+		}
 		if (i > rrarb_case(stacka, stackb, tmp->nbr))
+		{
 			i = rrarb_case(stacka, stackb, tmp->nbr);
+			printf ("El rrarb da: %d", i);
+		}
 		tmp = tmp->next;
+		printf ("=============================================");
 	}
 	return (i);
 	
