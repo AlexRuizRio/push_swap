@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 19:09:34 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/12 20:01:26 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/13 01:47:27 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,15 @@ t_stack	*sort_b(t_stack **stacka)
 	t_stack	*stackb;
 	
 	stackb = NULL;
+	printf("size del stackA: %d\n", ft_stcksize(*stacka) );
 	if (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
+	{
+		printf("size del stackA: %d\n", ft_stcksize(*stacka) );
 		pb(stacka, &stackb, 1);
+		printf("size del stackA: %d\n", ft_stcksize(*stacka) );
+	}
+	
 	if (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
-		write(1, "dwdwdwd", 7);
 		pb(stacka, &stackb, 1);
 	if (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
 		order_upto_3(stacka, &stackb);
@@ -83,7 +88,7 @@ int	best_option(t_stack *stacka, t_stack *stackb)
 
 	tmp = stacka;
 	i = rrarrb_case(stacka, stackb, stacka->nbr);
-	printf ("El rrarrb da: %d", i);
+	printf ("El rrarrb da: %d\n", i);
 	while (tmp)
 	{
 		if (i > rarb_case (stacka, stackb, tmp->nbr))
@@ -107,7 +112,7 @@ int	best_option(t_stack *stacka, t_stack *stackb)
 			printf ("El rrarb da: %d", i);
 		}
 		tmp = tmp->next;
-		printf ("=============================================");
+		printf ("=");
 	}
 	return (i);
 	

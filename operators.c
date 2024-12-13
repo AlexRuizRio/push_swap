@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 17:42:54 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/11/27 20:12:14 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/13 01:40:16 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ void	pb(t_stack **a, t_stack **b, int j)
 		return ;
 	tmp = *b;
 	*b = *a;
-	(*b)->next = tmp;
 	*a = (*a)->next;
+	(*b)->next = tmp;
 	if (j == 1)
 		write(1, "pb\n", 3);
 }
