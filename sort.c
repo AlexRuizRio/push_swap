@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 19:09:34 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/13 01:47:27 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:17:31 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ t_stack	*sort_b(t_stack **stacka)
 	printf("size del stackA: %d\n", ft_stcksize(*stacka) );
 	if (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
 	{
-		printf("size del stackA: %d\n", ft_stcksize(*stacka) );
 		pb(stacka, &stackb, 1);
 		printf("size del stackA: %d\n", ft_stcksize(*stacka) );
 	}
 	
 	if (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
 		pb(stacka, &stackb, 1);
+	printf("size del stackA: %d\n", ft_stcksize(*stacka) );
 	if (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
 		order_upto_3(stacka, &stackb);
 	return (stackb);
@@ -84,6 +84,7 @@ void	order_upto_3(t_stack **stacka, t_stack **stackb)
 int	best_option(t_stack *stacka, t_stack *stackb)
 {
 	int		i;
+	int		a;
 	t_stack	*tmp;
 
 	tmp = stacka;
@@ -91,28 +92,24 @@ int	best_option(t_stack *stacka, t_stack *stackb)
 	printf ("El rrarrb da: %d\n", i);
 	while (tmp)
 	{
-		if (i > rarb_case (stacka, stackb, tmp->nbr))
-		{
+		a = rarb_case (stacka, stackb, tmp->nbr);
+		printf ("El rarb da: %d\n", a);
+		if (i > a)
 			i = rarb_case (stacka, stackb, tmp->nbr);
-			printf ("El rarb da: %d", i);
-		}
-		if (i > rrarrb_case ( stacka, stackb, tmp->nbr))
-		{
+		a = rrarrb_case ( stacka, stackb, tmp->nbr);
+		printf ("El rrarrb da: %d\n", a);
+		if (i > a)
 			i = rrarrb_case ( stacka, stackb, tmp->nbr);
-			printf ("El rrarrb da: %d", i);
-		}
-		if (i > rarrb_case (stacka, stackb, tmp->nbr))
-		{
+		a = rarrb_case (stacka, stackb, tmp->nbr);
+		printf ("El rarrb da: %d\n", a);
+		if (i > a)
 			i = rarrb_case (stacka, stackb, tmp->nbr);
-			printf ("El rarrb da: %d", i);
-		}
-		if (i > rrarb_case(stacka, stackb, tmp->nbr))
-		{
+		a = rrarb_case(stacka, stackb, tmp->nbr);
+		printf ("El rrarb da: %d\n", a);
+		if (i > a)
 			i = rrarb_case(stacka, stackb, tmp->nbr);
-			printf ("El rrarb da: %d", i);
-		}
 		tmp = tmp->next;
-		printf ("=");
+		printf ("=\n");
 	}
 	return (i);
 	
@@ -200,7 +197,27 @@ int find_placeb (t_stack *stackb, int num)
 	return(i);
 }
 
-// int find_placea (t_stack *stacka, int num)
+int find_placea (t_stack *stacka, int num)
+{
+	int	i;
+	t_stack *tmp;
+
+	if (num > stacka->nbr && num < ft_stcklast(stacka)->nbr)
+	i = 0;
+	else if (num > max(stacka) || num < min(stacka))
+		i = ft_index(stacka, min(stacka));
+	else
+	{
+		tmp = stacka->next;
+		while (stacka->nbr > num || tmp->nbr < num)
+		{
+			stacka = stacka->next;
+			tmp = tmp->next;
+			i++;
+		}
+	}
+	return (i);
+}
 
 int	min(t_stack *ab)
 {
@@ -228,4 +245,49 @@ int	max(t_stack *ab)
 		ab = ab->next;
 	}
 	return (i);
+}
+
+// Apply_c
+
+int	apply_rarb (t_stack **stacka, t_stack **stackb, long num, char ab)
+{
+	if (ab == 'a')
+	{
+		while ((*stacka)->nbr != num && find_placeb (stackb, num) > 0)
+			rr(stacka, stackb, 1);
+		while ((*stacka)->nbr != num)
+			ra(stacka, 1);
+		while (find_placeb(*stackb, num) > 0)
+			rb(stackb, 1);
+		pb(stacka, stackb, 1);
+	}
+	else
+	{
+		while ((*stackb)->nbr != num && find_placea (stacka, num) > 0)
+			rr (stacka, stackb, 1);
+		while ((*stackb)->nbr != num)
+			rb(stackb, 1);
+		while (find_placea(*stacka, num) > 0)
+			rb(stacka, 1);
+		pa(stacka, stackb, 1);
+	}
+	return (-1);
+}
+
+int apply_rrarrb(t_stack **stacka, t_stack **stackb, long num, char ab)
+{
+	if (ab == 'a')
+	{
+		while ((*stacka)->nbr != ab && find_placeb(*stackb, num) > 0)
+			rrr(stacka, stackb, 1);
+		while((*stacka)->nbr != num)
+			rra(stacka, 1);
+		while(find_placeb(*stackb, num))
+			rrb(stackb, 1);
+		pb(stacka, stackb, 1);
+	}
+	else
+	{
+		
+	}
 }

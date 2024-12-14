@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:17:28 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/12 19:28:31 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:12:52 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	rb(t_stack **b, int j);
 void	rr(t_stack **a, t_stack **b, int j);
 void	rra(t_stack **a, int j);
 void	rrb(t_stack **b, int j);
-void	ft_rrr_b(t_stack **b, int j);
+void	rrr(t_stack **a, t_stack **b, int j);
+void	rrr_b(t_stack **b, int j);
 int		rarb_case (t_stack *stacka, t_stack *stackb, int c);
 int		rrarrb_case (t_stack *stacka, t_stack *stackb, int c);
 int		rrarb_case (t_stack *stacka, t_stack *stackb, int c);

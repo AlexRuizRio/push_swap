@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:11:26 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/05 10:12:46 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:11:46 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	rrb(t_stack **b, int j)
 		write(1, "rrb\n", 4);
 }
 
-void	ft_rrr_b(t_stack **b, int j)
+void	rrr_b(t_stack **b, int j)
 {
 	int		i;
 	t_stack	*tmp;
@@ -80,7 +80,7 @@ void	ft_rrr_b(t_stack **b, int j)
 		write(1, "rrr\n", 4);
 }
 
-void	ft_rrr(t_stack **a, t_stack **b, int j)
+void	rrr(t_stack **a, t_stack **b, int j)
 {
 	int		i;
 	t_stack	*tmp;
@@ -98,5 +98,5 @@ void	ft_rrr(t_stack **a, t_stack **b, int j)
 		tmp = tmp->next;
 		i--;
 	}
-	ft_rrr_b(b, j);
+	rrr_b(b, j);
 }
