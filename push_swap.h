@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:17:28 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/14 14:12:52 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/15 21:55:47 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		checksorted(t_stack *stacka);
 void    sort(t_stack **stacka);
 t_stack	*sort_b(t_stack **stacka);
 void	order_upto_3(t_stack **stacka, t_stack **stackb);
-int		best_option(t_stack *stacka, t_stack *stackb);
+int		best_option_a(t_stack *stacka, t_stack *stackb);
 void	sa(t_stack **a, int j);
 void	sb(t_stack **b, int j);
 void	ss(t_stack **a, t_stack **b, int j);

@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 19:09:34 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/14 14:17:31 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/16 01:48:05 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,27 +43,48 @@ int	checksorted(t_stack *stacka)
 	return (1);
 }
 
+void sort_3 (t_stack **stacka)
+{
+	if (min(*stacka) == (*stacka)->nbr)
+	{
+		rra(stacka, 1);
+		sa(stacka, 1);
+	}
+	else if (max(*stacka) == (*stacka)->nbr)
+	{
+		ra(stacka, 1);
+		if (checksorted(*stacka))
+			sa(stacka, 1);
+	}
+	else
+	{
+		if (ft_index(*stacka, max(*stacka) == 1) == 1)
+			rra(stacka, 1);
+		else
+			sa(stacka, 1);
+	}
+}
+
 t_stack	*sort_b(t_stack **stacka)
 {
 	t_stack	*stackb;
 	
 	stackb = NULL;
-	printf("size del stackA: %d\n", ft_stcksize(*stacka) );
-	if (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
-	{
-		pb(stacka, &stackb, 1);
-		printf("size del stackA: %d\n", ft_stcksize(*stacka) );
-	}
-	
 	if (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
 		pb(stacka, &stackb, 1);
-	printf("size del stackA: %d\n", ft_stcksize(*stacka) );
+	if (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
+		pb(stacka, &stackb, 1);
 	if (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
 		order_upto_3(stacka, &stackb);
+	if(!checksorted(*stacka))
+		// AQui tiene que ir la funcion de ordenar 3
 	return (stackb);
 }
 
-// t_stack	**ft_sort_a(t_stack **stack_a, t_stack **stack_b)
+t_stack	**ft_sort_a(t_stack **stack_a, t_stack **stack_b)
+{
+	sort_3
+}
 
 void	order_upto_3(t_stack **stacka, t_stack **stackb)
 {
@@ -71,17 +92,29 @@ void	order_upto_3(t_stack **stacka, t_stack **stackb)
 	int		i;
 
 	i = best_option(*stacka, *stackb); // Acabar esta funcion
-	/*
+	
 	while (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
 	{
 		tmp = stacka;
-		i = best_option(*stacka, *stackb);
+		i = best_option_a(*stacka, *stackb);
+		while(i >= 0)
+		{
+			if (i == rarb_case(*stacka, *stackb, tmp->nbr))
+				i = apply_rarb (stacka, stackb, tmp->nbr, 'a');
+			else if (i == rrarrb_case(*stacka, *stackb, tmp->nbr))
+				i = apply_rrarrb(stacka, stackb, tmp->nbr, 'a');
+			else if (i == rarrb_case(stacka, stackb, tmp->nbr))
+				i = apply_rarrb(stacka, stackb, tmp->nbr, 'a');
+			else if (i == rrarb_case(stacka, stacka, tmp->nbr))
+				i = apply_rrarb(stacka, stackb, tmp->nbr, 'a');
+			else 
+				tmp = tmp->next;
+		}
 	}
-	*/
 }
 
 // otro ARCHIVO Y PROBLAMENTE HAYA QUE HACER 2 ARCHIVOS UNO A Y OTRO B 
-int	best_option(t_stack *stacka, t_stack *stackb)
+int	best_option_a(t_stack *stacka, t_stack *stackb)
 {
 	int		i;
 	int		a;
@@ -288,6 +321,55 @@ int apply_rrarrb(t_stack **stacka, t_stack **stackb, long num, char ab)
 	}
 	else
 	{
-		
+		while ((*stackb)->nbr != num && find_placea(*stacka, num))
+			rrr(stacka, stackb, num);
+		while ((*stackb)->nbr != num)
+			rrb(stackb, 1);
+		while (find_placea(*stacka, num) > 0)
+			rra(stacka, 1);
+		pa(stacka, stackb, 1);
 	}
+	return (-1);
+}
+
+int	apply_rrarb(t_stack **stacka, t_stack **stackb, long num, char ab)
+{
+	if (ab == 'a')
+	{
+		while ((*stacka)->nbr != num)
+			rra(stacka, 1);
+		while (find_placeb(*stackb, num) > 0)
+			rb(stacka, 1);
+		pb(stacka, stackb, 1);
+	}
+	else
+	{
+		while (find_placea(*stacka, num) > 1)
+			rra(stacka, 1);
+		while ((*stackb)->nbr != num)
+			rb (stackb, 1);
+		pa(stacka, stackb, 1);
+	}
+	return (-1);
+}
+
+int apply_rarrb (t_stack **stacka, t_stack **stackb, int num, char ab)
+{
+	if (ab == 'a')
+	{
+		while ((*stacka)->nbr != num)
+			ra(stacka, 1);
+		while (find_placeb(*stackb, num) > 0)
+			rrb (stackb, 1);
+		pb(stacka, stackb, 1);
+	}
+	else
+	{
+		while (find_placea(*stacka, num) > 0)
+			ra(stacka, 1);
+		while ((*stackb)->nbr != num)
+			rrb(stackb, 1);
+		pa(stacka, stackb, 1);
+	}
+	return (-1);
 }
