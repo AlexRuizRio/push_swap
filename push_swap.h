@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:17:28 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/15 21:55:47 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:17:43 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int		ft_stcksize(t_stack *lst);
 int		checksorted(t_stack *stacka);
 void    sort(t_stack **stacka);
 t_stack	*sort_b(t_stack **stacka);
+t_stack	**sort_a(t_stack **stacka, t_stack **stackb);
 void	order_upto_3(t_stack **stacka, t_stack **stackb);
 int		best_option_a(t_stack *stacka, t_stack *stackb);
 void	sa(t_stack **a, int j);
@@ -56,10 +57,14 @@ void	rra(t_stack **a, int j);
 void	rrb(t_stack **b, int j);
 void	rrr(t_stack **a, t_stack **b, int j);
 void	rrr_b(t_stack **b, int j);
-int		rarb_case (t_stack *stacka, t_stack *stackb, int c);
-int		rrarrb_case (t_stack *stacka, t_stack *stackb, int c);
-int		rrarb_case (t_stack *stacka, t_stack *stackb, int c);
-int		rarrb_case (t_stack *stacka, t_stack *stackb, int c);
+int		rarb_casea (t_stack *stacka, t_stack *stackb, int num);
+int		rrarrb_casea (t_stack *stacka, t_stack *stackb, int num);
+int		rrarb_casea (t_stack *stacka, t_stack *stackb, int num);
+int		rarrb_casea (t_stack *stacka, t_stack *stackb, int num);
+int		rarb_caseb (t_stack *stacka, t_stack *stackb, int num);
+int		rrarrb_caseb (t_stack *stacka, t_stack *stackb, int num);
+int		rrarb_caseb (t_stack *stacka, t_stack *stackb, int num);
+int		rarrb_caseb (t_stack *stacka, t_stack *stackb, int num);
 int		ft_index (t_stack *stacka, int nbr);
 int 	find_placeb (t_stack *stackb, int num);
 int		min(t_stack *ab);

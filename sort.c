@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 19:09:34 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/16 14:58:03 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:22:02 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,22 @@ void    sort(t_stack **stacka)
     stackb = NULL;
     if (ft_stcksize(*stacka) == 2)
         sa(stacka, 1);
-    else{
-		stackb = sort_b(stacka); //AQUI TOCA CONTINUAR
+    else
+	{
+		stackb = sort_b(stacka);
+		stacka = sort_a(stacka, stackb);
+		i = ft_index(stacka, min(*stacka));
+		if (i < ft_stcksize(*stacka) - i)
+		{
+			while ((*stacka)->nbr != min(*stacka))
+				ra(stacka, 1);
+		}
+		else
+		{
+				while ((*stacka)->nbr != min(*stacka))
+				rra(stacka, 1);
+		}
 	}
-        
-    
 }
 int	checksorted(t_stack *stacka)
 {
@@ -79,7 +90,7 @@ t_stack	*sort_b(t_stack **stacka)
 	return (stackb);
 }
 
-t_stack	**ft_sort_a(t_stack **stacka, t_stack **stackb)
+t_stack	**sort_a(t_stack **stacka, t_stack **stackb)
 {
 	int		i;
 	t_stack	*tmp;
@@ -88,22 +99,33 @@ t_stack	**ft_sort_a(t_stack **stacka, t_stack **stackb)
 	while (*stackb)
 	{
 		tmp = *stackb;
-		i = 
-		
+		i = best_option_a(*stacka, *stackb);
+		while (i >= 0)
+		{
+			if (i == rarb_casea(*stacka, *stackb, tmp->nbr))
+				i =apply_rarb(stacka, stackb, tmp->nbr, 'b');
+			else if (i == rarrb_casea(*stacka, *stacka, tmp->nbr))
+				i = apply_rarrb(stacka, stackb, tmp->nbr, 'b');
+			else if (i == rrarrb_casea(*stacka, stackb, tmp->nbr))
+				i = apply_rrarrb(stacka, stackb, tmp->nbr, 'b');
+			else if (i == rrarb_casea(*stacka, *stackb, tmp->nbr))
+				i = apply_rrarb(stacka, stackb, tmp->nbr, 'b');
+			else
+				tmp = tmp->next;
+		}
 	}
+	return (stacka);
 }
 
 void	order_upto_3(t_stack **stacka, t_stack **stackb)
 {
 	t_stack	*tmp;
 	int		i;
-
-	i = best_option(*stacka, *stackb); // Acabar esta funcion
 	
 	while (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
 	{
 		tmp = stacka;
-		i = best_option_a(*stacka, *stackb);
+		i = best_option_b(*stacka, *stackb);
 		while(i >= 0)
 		{
 			if (i == rarb_caseb(*stacka, *stackb, tmp->nbr))
@@ -121,7 +143,7 @@ void	order_upto_3(t_stack **stacka, t_stack **stackb)
 }
 
 // otro ARCHIVO Y PROBLAMENTE HAYA QUE HACER 2 ARCHIVOS UNO A Y OTRO B 
-int	best_option_a(t_stack *stacka, t_stack *stackb)
+int	best_option_b(t_stack *stacka, t_stack *stackb)
 {
 	int		i;
 	int		a;
@@ -160,55 +182,63 @@ int	best_option_a(t_stack *stacka, t_stack *stackb)
 	t_stack *tmp;
 	
 	tmp = stackb;
-	i = rrarrb_case(stacka, stackb, tmp->nbr);
+	i = rrarrb_casea(stacka, stackb, tmp->nbr);
 	while (tmp)
 	{
-		if (i > rarb_case(stacka, stackb, tmp->nbr))
-			i = rarb_case
+		if (i > rarb_casea(stacka, stackb, tmp->nbr))
+			i = rarb_casea(stacka, stackb, tmp->nbr);
+		if (i > rrarrb_casea(stacka, stackb, tmp->nbr))
+			i = rrarrb_casea(stacka, stackb, tmp->nbr);
+		if (i > rarrb_casea(stacka, stackb, tmp->nbr))
+			i = rarrb_casea(stacka, stackb, tmp->nbr);
+		if (i > rrarb_casea(stacka, stackb, tmp->nbr))
+			i = rrarb_casea(stacka, stackb, tmp->nbr);
+		tmp = tmp->nbr;
 	}
+	return (i);
 }
 
 // ARCHIVO CASE B
-int	rarb_caseb (t_stack *stacka, t_stack *stackb, int c)
+int	rarb_caseb (t_stack *stacka, t_stack *stackb, int num)
 {
 	int i;
 
-	i = find_placeb(stackb, c);
-	if (i < ft_index(stacka, c))
-		i = ft_index (stacka, c);
+	i = find_placeb(stackb, num);
+	if (i < ft_index(stacka, num))
+		i = ft_index (stacka, num);
 	return (i);
 }
-int	rrarrb_caseb (t_stack *stacka, t_stack *stackb, int c)
+int	rrarrb_caseb (t_stack *stacka, t_stack *stackb, int num)
 {
 	int i;
 
 	i = 0;
 
-	if(find_placeb(stackb, c))
-		i = ft_stcksize(stackb) - find_placeb(stackb, c);
-	if ((i < (ft_stcksize(stacka) - find_placeb(stacka, c)) && ft_index(stacka, c)))
-	i = ft_stcksize(stacka) - ft_index(stacka,c);
+	if(find_placeb(stackb, num))
+		i = ft_stcksize(stackb) - find_placeb(stackb, num);
+	if ((i < (ft_stcksize(stacka) - find_placeb(stacka, num)) && ft_index(stacka, num)))
+	i = ft_stcksize(stacka) - ft_index(stacka,num);
 	return (i);
 }
 
-int	rrarb_caseb (t_stack *stacka, t_stack *stackb, int c)
+int	rrarb_caseb (t_stack *stacka, t_stack *stackb, int num)
 {
 	int i;
 
 	i = 0;
-	if (ft_index(stacka, c))
-		i = ft_stcksize(stacka) - ft_index (stacka, c);
-	i = find_placeb(stackb, c) + 1;
+	if (ft_index(stacka, num))
+		i = ft_stcksize(stacka) - ft_index (stacka, num);
+	i = find_placeb(stackb, num) + 1;
 	return (i);
 }
-int	rarrb_caseb (t_stack *stacka, t_stack *stackb, int c)
+int	rarrb_caseb (t_stack *stacka, t_stack *stackb, int num)
 {
 	int i;
 
 	i = 0;
-	if (find_placeb(stackb, c))
-		i = ft_stcksize(stackb) - find_placeb (stackb, c);
-	i = ft_index(stacka, c) + i;
+	if (find_placeb(stackb, num))
+		i = ft_stcksize(stackb) - find_placeb (stackb, num);
+	i = ft_index(stacka, num) + i;
 	return (i);
 }
 
@@ -247,7 +277,7 @@ int	rarrb_casea (t_stack *stacka, t_stack *stackb, int num)
 	return (i);
 }
 
-int rrarb (t_stack *stacka, t_stack *stackb, int num)
+int rrarb_casea (t_stack *stacka, t_stack *stackb, int num)
 {
 	int	i;
 
