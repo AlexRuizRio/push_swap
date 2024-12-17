@@ -6,13 +6,31 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 19:09:34 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/16 17:22:02 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/17 23:32:52 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "push_swap.h"
 
+void print_stack(t_stack *stack)
+{
+    t_stack *tmp = stack;
+
+    if (!tmp)
+    {
+        printf("Stack is empty.\n");
+        return;
+    }
+
+    printf("Stack contents: ");
+    while (tmp)
+    {
+        printf("%ld ", tmp->nbr);  // Imprime el valor de cada elemento
+        tmp = tmp->next;  // Avanza al siguiente elemento
+    }
+    printf("\n");
+}
 
 void    sort(t_stack **stacka)
 {
@@ -25,15 +43,18 @@ void    sort(t_stack **stacka)
     else
 	{
 		stackb = sort_b(stacka);
-		stacka = sort_a(stacka, stackb);
-		i = ft_index(stacka, min(*stacka));
+		stacka = sort_a(stacka, &stackb);
+	
+		i = ft_index(*stacka, min(*stacka));
 		if (i < ft_stcksize(*stacka) - i)
 		{
+			
 			while ((*stacka)->nbr != min(*stacka))
 				ra(stacka, 1);
 		}
 		else
 		{
+
 				while ((*stacka)->nbr != min(*stacka))
 				rra(stacka, 1);
 		}
@@ -69,7 +90,7 @@ void sort_3 (t_stack **stacka)
 	}
 	else
 	{
-		if (ft_index(*stacka, max(*stacka) == 1) == 1)
+		if (ft_index(*stacka, max(*stacka)) == 1)
 			rra(stacka, 1);
 		else
 			sa(stacka, 1);
@@ -87,6 +108,8 @@ t_stack	*sort_b(t_stack **stacka)
 		pb(stacka, &stackb, 1);
 	if (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
 		order_upto_3(stacka, &stackb);
+	if (!checksorted(*stacka))
+		sort_3(stacka);
 	return (stackb);
 }
 
@@ -95,18 +118,19 @@ t_stack	**sort_a(t_stack **stacka, t_stack **stackb)
 	int		i;
 	t_stack	*tmp;
 	
-	sort_3(stacka);
+	
 	while (*stackb)
 	{
 		tmp = *stackb;
+		write(1, "aqui", 4);
 		i = best_option_a(*stacka, *stackb);
 		while (i >= 0)
 		{
 			if (i == rarb_casea(*stacka, *stackb, tmp->nbr))
 				i =apply_rarb(stacka, stackb, tmp->nbr, 'b');
-			else if (i == rarrb_casea(*stacka, *stacka, tmp->nbr))
+			else if (i == rarrb_casea(*stacka, *stackb, tmp->nbr))
 				i = apply_rarrb(stacka, stackb, tmp->nbr, 'b');
-			else if (i == rrarrb_casea(*stacka, stackb, tmp->nbr))
+			else if (i == rrarrb_casea(*stacka, *stackb, tmp->nbr))
 				i = apply_rrarrb(stacka, stackb, tmp->nbr, 'b');
 			else if (i == rrarb_casea(*stacka, *stackb, tmp->nbr))
 				i = apply_rrarb(stacka, stackb, tmp->nbr, 'b');
@@ -124,7 +148,7 @@ void	order_upto_3(t_stack **stacka, t_stack **stackb)
 	
 	while (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
 	{
-		tmp = stacka;
+		tmp = *stacka;
 		i = best_option_b(*stacka, *stackb);
 		while(i >= 0)
 		{
@@ -132,12 +156,17 @@ void	order_upto_3(t_stack **stacka, t_stack **stackb)
 				i = apply_rarb (stacka, stackb, tmp->nbr, 'a');
 			else if (i == rrarrb_caseb(*stacka, *stackb, tmp->nbr))
 				i = apply_rrarrb(stacka, stackb, tmp->nbr, 'a');
-			else if (i == rarrb_caseb(stacka, stackb, tmp->nbr))
+			else if (i == rarrb_caseb(*stacka, *stackb, tmp->nbr))
 				i = apply_rarrb(stacka, stackb, tmp->nbr, 'a');
-			else if (i == rrarb_caseb(stacka, stacka, tmp->nbr))
+			else if (i == rrarb_caseb(*stacka, *stackb, tmp->nbr))
 				i = apply_rrarb(stacka, stackb, tmp->nbr, 'a');
-			else 
+			else
 				tmp = tmp->next;
+			printf("Pila A: ");
+				print_stack(*stacka);
+				printf("Pila B: ");
+				print_stack(*stackb);
+				
 		}
 	}
 }
@@ -146,32 +175,21 @@ void	order_upto_3(t_stack **stacka, t_stack **stackb)
 int	best_option_b(t_stack *stacka, t_stack *stackb)
 {
 	int		i;
-	int		a;
 	t_stack	*tmp;
 
 	tmp = stacka;
 	i = rrarrb_caseb(stacka, stackb, stacka->nbr);
-	printf ("El rrarrb da: %d\n", i);
 	while (tmp)
 	{
-		a = rarb_caseb (stacka, stackb, tmp->nbr);
-		printf ("El rarb da: %d\n", a);
-		if (i > a)
-			i = rarb_caseb (stacka, stackb, tmp->nbr);
-		a = rrarrb_case ( stacka, stackb, tmp->nbr);
-		printf ("El rrarrb da: %d\n", a);
-		if (i > a)
-			i = rrarrb_caseb ( stacka, stackb, tmp->nbr);
-		a = rarrb_caseb (stacka, stackb, tmp->nbr);
-		printf ("El rarrb da: %d\n", a);
-		if (i > a)
-			i = rarrb_caseb (stacka, stackb, tmp->nbr);
-		a = rrarb_caseb(stacka, stackb, tmp->nbr);
-		printf ("El rrarb da: %d\n", a);
-		if (i > a)
+		if (i > rarb_caseb(stacka, stackb, tmp->nbr))
+			i = rarb_caseb(stacka, stackb, tmp->nbr);
+		if (i > rrarrb_caseb(stacka, stackb, tmp->nbr))
+			i = rrarrb_caseb(stacka, stackb, tmp->nbr);
+		if (i > rarrb_caseb(stacka, stackb, tmp->nbr))
+			i = rarrb_caseb(stacka, stackb, tmp->nbr);
+		if (i > rrarb_caseb(stacka, stackb, tmp->nbr))
 			i = rrarb_caseb(stacka, stackb, tmp->nbr);
 		tmp = tmp->next;
-		printf ("=\n");
 	}
 	return (i);
 }
@@ -182,7 +200,7 @@ int	best_option_a(t_stack *stacka, t_stack *stackb)
 	t_stack *tmp;
 	
 	tmp = stackb;
-	i = rrarrb_casea(stacka, stackb, tmp->nbr);
+	i = rrarrb_casea(stacka, stackb, stackb->nbr);
 	while (tmp)
 	{
 		if (i > rarb_casea(stacka, stackb, tmp->nbr))
@@ -193,7 +211,7 @@ int	best_option_a(t_stack *stacka, t_stack *stackb)
 			i = rarrb_casea(stacka, stackb, tmp->nbr);
 		if (i > rrarb_casea(stacka, stackb, tmp->nbr))
 			i = rrarb_casea(stacka, stackb, tmp->nbr);
-		tmp = tmp->nbr;
+		tmp = tmp->next;
 	}
 	return (i);
 }
@@ -213,11 +231,10 @@ int	rrarrb_caseb (t_stack *stacka, t_stack *stackb, int num)
 	int i;
 
 	i = 0;
-
 	if(find_placeb(stackb, num))
 		i = ft_stcksize(stackb) - find_placeb(stackb, num);
-	if ((i < (ft_stcksize(stacka) - find_placeb(stacka, num)) && ft_index(stacka, num)))
-	i = ft_stcksize(stacka) - ft_index(stacka,num);
+	if ((i < (ft_stcksize(stacka) - ft_index(stacka, num)) && ft_index(stacka, num)))
+		i = ft_stcksize(stacka) - ft_index(stacka,num);
 	return (i);
 }
 
@@ -228,7 +245,7 @@ int	rrarb_caseb (t_stack *stacka, t_stack *stackb, int num)
 	i = 0;
 	if (ft_index(stacka, num))
 		i = ft_stcksize(stacka) - ft_index (stacka, num);
-	i = find_placeb(stackb, num) + 1;
+	i = find_placeb(stackb, num) + i;
 	return (i);
 }
 int	rarrb_caseb (t_stack *stacka, t_stack *stackb, int num)
@@ -272,8 +289,8 @@ int	rarrb_casea (t_stack *stacka, t_stack *stackb, int num)
 
 	i = 0;
 	if (ft_index(stackb, num))
-		i = ft_stcksize(stackb) - find_placea (stackb, num);
-	i = ft_index(stackb, num) + i;
+		i = ft_stcksize(stackb) - ft_index (stackb, num);
+	i = find_placea(stacka, num) + i;
 	return (i);
 }
 
@@ -310,7 +327,7 @@ int find_placeb (t_stack *stackb, int num)
 
 	i = 1;
 	if (num > stackb->nbr && num < ft_stcklast(stackb)->nbr)
-	i = 0;
+		i = 0;
 	else if (num > max(stackb) || num < min(stackb))
 		i = ft_index(stackb, max(stackb));
 	else
@@ -330,8 +347,9 @@ int find_placea (t_stack *stacka, int num)
 {
 	int	i;
 	t_stack *tmp;
-
-	if (num > stacka->nbr && num < ft_stcklast(stacka)->nbr)
+	
+	i = 1;
+	if (num > stacka->nbr && num > ft_stcklast(stacka)->nbr)
 	i = 0;
 	else if (num > max(stacka) || num < min(stacka))
 		i = ft_index(stacka, min(stacka));
@@ -382,7 +400,7 @@ int	apply_rarb (t_stack **stacka, t_stack **stackb, long num, char ab)
 {
 	if (ab == 'a')
 	{
-		while ((*stacka)->nbr != num && find_placeb (stackb, num) > 0)
+		while ((*stacka)->nbr != num && find_placeb (*stackb, num) > 0)
 			rr(stacka, stackb, 1);
 		while ((*stacka)->nbr != num)
 			ra(stacka, 1);
@@ -392,12 +410,12 @@ int	apply_rarb (t_stack **stacka, t_stack **stackb, long num, char ab)
 	}
 	else
 	{
-		while ((*stackb)->nbr != num && find_placea (stacka, num) > 0)
+		while ((*stackb)->nbr != num && find_placea (*stacka, num) > 0)
 			rr (stacka, stackb, 1);
 		while ((*stackb)->nbr != num)
 			rb(stackb, 1);
 		while (find_placea(*stacka, num) > 0)
-			rb(stacka, 1);
+			ra(stacka, 1);
 		pa(stacka, stackb, 1);
 	}
 	return (-1);
@@ -407,18 +425,18 @@ int apply_rrarrb(t_stack **stacka, t_stack **stackb, long num, char ab)
 {
 	if (ab == 'a')
 	{
-		while ((*stacka)->nbr != ab && find_placeb(*stackb, num) > 0)
+		while ((*stacka)->nbr != num && find_placeb(*stackb, num) > 0)
 			rrr(stacka, stackb, 1);
 		while((*stacka)->nbr != num)
 			rra(stacka, 1);
-		while(find_placeb(*stackb, num))
+		while(find_placeb(*stackb, num) > 0)
 			rrb(stackb, 1);
 		pb(stacka, stackb, 1);
 	}
 	else
 	{
-		while ((*stackb)->nbr != num && find_placea(*stacka, num))
-			rrr(stacka, stackb, num);
+		while ((*stackb)->nbr != num && find_placea(*stacka, num) > 0)
+			rrr(stacka, stackb, 1);
 		while ((*stackb)->nbr != num)
 			rrb(stackb, 1);
 		while (find_placea(*stacka, num) > 0)
@@ -435,12 +453,12 @@ int	apply_rrarb(t_stack **stacka, t_stack **stackb, long num, char ab)
 		while ((*stacka)->nbr != num)
 			rra(stacka, 1);
 		while (find_placeb(*stackb, num) > 0)
-			rb(stacka, 1);
+			rb(stackb, 1);
 		pb(stacka, stackb, 1);
 	}
 	else
 	{
-		while (find_placea(*stacka, num) > 1)
+		while (find_placea(*stacka, num) > 0)
 			rra(stacka, 1);
 		while ((*stackb)->nbr != num)
 			rb (stackb, 1);

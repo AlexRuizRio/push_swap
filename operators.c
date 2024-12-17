@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 17:42:54 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/13 01:40:16 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/17 20:03:44 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	pa(t_stack **a, t_stack **b, int j)
 		return ;
 	tmp = *a;
 	*a = *b;
-	(*a)->next = tmp;
 	*b = (*b)->next;
+	(*a)->next = tmp;
 	if (j == 1)
 		write(1, "pa\n", 3);
 }

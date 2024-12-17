@@ -168,13 +168,12 @@ int checker_arg (int count, long argi[])
 int main(int argc, char *argv[]) 
 {
 	t_stack *stacka;
-	t_stack *header;
   	int i;
 	int count;
 	long *argi;
 
 	stacka = NULL;
-	count = parseo (argc, argv) + 1;
+	count = parseo (argc, argv);
 	argi = malloc(count * sizeof(long));
 	if(argi == NULL)
 		return(-1);
@@ -183,50 +182,43 @@ int main(int argc, char *argv[])
   	i = checker_arg(count, argi);
   	if(i == 6)
     	return(-1);
-	header = enter_data(count, argi, &stacka);
+	enter_data(count, argi, &stacka);
 	if (!checksorted(stacka))
 		sort(&stacka);
 
-	/*
 	while(stacka->next != NULL) // Comprobacion de que se añaden BORRAR
 	{
 		printf("%ld ", stacka->nbr);
 		stacka = stacka->next;
 	}
-	printf ("\n%p \n", header); // Comprobacion del puntero head // BORRAR 
 
-	mainquicksort(argi, count); // Comprobacion de que ordena un array BORRAR
-	*/
 	free(argi);
   return (i);
 }
 
-t_stack *enter_data(int count, long *argvi, t_stack **stacka)
+void enter_data(int count, long *argvi, t_stack **stacka)
 {
 	t_stack *node;
 	t_stack *former;
-	t_stack *header;
 	int i;
 
 	i = 0;
 	node = ft_stcknew(argvi[i], i);
 	if (node == NULL)
-		return (NULL);	
+		return ;	
 	former = node;
-	header = node;
-	*stacka = header;
+	*stacka = node;
 	while (++i < count) 
     {
         node = ft_stcknew(argvi[i], i);
         if (node == NULL)
 		{
 			ft_stckclear(stacka);
-			return (NULL);
+			return ;
 		}
         ft_stckadd_back(stacka, node, former);
         former = node;
     }
-    return (header);
 }
 
 
