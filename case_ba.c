@@ -1,46 +1,65 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   case_ba.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/18 16:41:46 by alruiz-d          #+#    #+#             */
+/*   Updated: 2024/12/18 20:16:15 by alruiz-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	rarb_casea(t_stack *stacka, t_stack *stackb, int num)
+// This function calculates the required amount of rotation.
+// Calculations are done for ra+rb case.
+int	ft_case_rarb_a(t_stack *a, t_stack *b, int c)
 {
 	int	i;
 
-	i = find_placea (stacka, num);
-	if (i < ft_index(stackb, num))
-		i = ft_index (stackb, num);
+	i = find_placea(a, c);
+	if (i < ft_find_index(b, c))
+		i = ft_find_index(b, c);
 	return (i);
 }
 
-int	rrarrb_casea(t_stack *a, t_stack *b, int num)
+// This function calculates the required amount of rotation.
+// Calculations are done for rra+rrb case.
+int	ft_case_rrarrb_a(t_stack *a, t_stack *b, int c)
 {
 	int	i;
 
 	i = 0;
-	if (find_placea(a, num))
-		i = ft_stcksize(a) - find_placea(a, num);
-	if ((i < (ft_stcksize(b) - ft_index(b, num))) && ft_index(b, num))
-		i = ft_stcksize(b) - ft_index(b, num);
+	if (find_placea(a, c))
+		i = ft_lstsize(a) - find_placea(a, c);
+	if ((i < (ft_lstsize(b) - ft_find_index(b, c))) && ft_find_index(b, c))
+		i = ft_lstsize(b) - ft_find_index(b, c);
 	return (i);
 }
 
-int	rarrb_casea(t_stack *stacka, t_stack *stackb, int num)
+// This function calculates the required amount of rotation.
+// Calculations are done for ra+rrb case.
+int	ft_case_rarrb_a(t_stack *a, t_stack *b, int c)
 {
 	int	i;
 
 	i = 0;
-	if (ft_index(stackb, num))
-		i = ft_stcksize(stackb) - ft_index (stackb, num);
-	i = find_placea(stacka, num) + i;
+	if (ft_find_index(b, c))
+		i = ft_lstsize(b) - ft_find_index(b, c);
+	i = find_placea(a, c) + i;
 	return (i);
 }
 
-int	rrarb_casea(t_stack *stacka, t_stack *stackb, int num)
+// This function calculates the required amount of rotation.
+// Calculations are done for rra+rb case.
+int	ft_case_rrarb_a(t_stack *a, t_stack *b, int c)
 {
 	int	i;
 
 	i = 0;
-	if (find_placea(stacka, num))
-		i = ft_stcksize(stacka) - find_placea(stacka, num);
-	i = ft_index(stackb, num) + i;
+	if (find_placea(a, c))
+		i = ft_lstsize(a) - find_placea(a, c);
+	i = ft_find_index(b, c) + i;
 	return (i);
 }

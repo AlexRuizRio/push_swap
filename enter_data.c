@@ -1,43 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operatorsthree.c                                   :+:      :+:    :+:   */
+/*   enter_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 20:11:26 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/18 20:21:29 by alruiz-d         ###   ########.fr       */
+/*   Created: 2024/12/18 16:47:52 by alruiz-d          #+#    #+#             */
+/*   Updated: 2024/12/18 17:12:29 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	rb(t_stack **b, int j)
+void	enter_data(int count, long *argvi, t_stack **stacka)
 {
-	t_stack	*tmp;
+	t_stack	*node;
+	t_stack	*former;
+	int		i;
 
-	if (!*b || !(*b)->next)
+	i = 0;
+	node = ft_stcknew(argvi[i], i);
+	if (node == NULL)
 		return ;
-	tmp = *b;
-	*b = ft_lstlast(*b);
-	(*b)->next = tmp;
-	*b = tmp->next;
-	tmp->next = NULL;
-	if (j == 0)
-		write(1, "rb\n", 3);
-}
-
-
-void	sb(t_stack **b, int j)
-{
-	t_stack	*tmp;
-
-	if (!*b || !((*b)->next))
-		return ;
-	tmp = *b;
-	*b = (*b)->next;
-	tmp->next = (*b)->next;
-	(*b)->next = tmp;
-	if (j == 0)
-		write(1, "sb\n", 3);
+	former = node;
+	*stacka = node;
+	while (++i < count)
+	{
+		node = ft_stcknew(argvi[i], i);
+		if (node == NULL)
+		{
+			ft_stckclear(stacka);
+			return ;
+		}
+		ft_stckadd_back(stacka, node, former);
+		former = node;
+	}
 }

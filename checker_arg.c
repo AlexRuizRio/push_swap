@@ -1,43 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operatorsthree.c                                   :+:      :+:    :+:   */
+/*   checker_arg.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 20:11:26 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/18 20:21:29 by alruiz-d         ###   ########.fr       */
+/*   Created: 2024/12/18 16:44:33 by alruiz-d          #+#    #+#             */
+/*   Updated: 2024/12/18 21:24:49 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	rb(t_stack **b, int j)
+int	checker_arg(int count, long argi[])
 {
-	t_stack	*tmp;
+	int	i;
+	int	y;
 
-	if (!*b || !(*b)->next)
-		return ;
-	tmp = *b;
-	*b = ft_lstlast(*b);
-	(*b)->next = tmp;
-	*b = tmp->next;
-	tmp->next = NULL;
-	if (j == 0)
-		write(1, "rb\n", 3);
-}
-
-
-void	sb(t_stack **b, int j)
-{
-	t_stack	*tmp;
-
-	if (!*b || !((*b)->next))
-		return ;
-	tmp = *b;
-	*b = (*b)->next;
-	tmp->next = (*b)->next;
-	(*b)->next = tmp;
-	if (j == 0)
-		write(1, "sb\n", 3);
+	i = 0;
+	while (i < count - 1)
+	{
+		if (argi[i] < -2147483648 || argi[i] > 2147483647)
+			return (write(2, "Error\n", 6));
+		y = i;
+		while (++y < count)
+		{
+			if (argi[i] == argi[y])
+				return (write(2, "Error\n", 6));
+		}
+		i++;
+	}
+	return (0);
 }

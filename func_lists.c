@@ -6,12 +6,11 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:06:42 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/18 00:38:46 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:43:43 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-# include "push_swap.h"
+#include "push_swap.h"
 
 t_stack	*ft_stcknew(long content, long index)
 {
@@ -21,7 +20,7 @@ t_stack	*ft_stcknew(long content, long index)
 	if (node == NULL)
 		return (NULL);
 	node->nbr = content;
-    node->index = index;
+	node->index = index;
 	node->next = NULL;
 	return (node);
 }
@@ -40,7 +39,6 @@ void	ft_stckadd_back(t_stack **lst, t_stack *new, t_stack *former)
 		while (temp->next != NULL)
 			temp = temp->next;
 		temp->next = new;
-        temp->prev = former;
 	}
 }
 
@@ -52,7 +50,7 @@ void	ft_stckclear(t_stack **lst)
 	{
 		tem = *lst;
 		*lst = (*lst)->next;
-		free(tem); 
+		free(tem);
 	}
 }
 

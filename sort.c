@@ -6,187 +6,118 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 19:09:34 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/18 01:39:47 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 20:28:38 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "push_swap.h"
 
-void    sort(t_stack **stacka)
-{
-    t_stack *stackb;
-    int i;
-
-    stackb = NULL;
-    if (ft_stcksize(*stacka) == 2)
-        sa(stacka, 1);
-    else
-	{
-		stackb = sort_b(stacka);
-		stacka = sort_a(stacka, &stackb);
-	
-		i = ft_index(*stacka, min(*stacka));
-		if (i < ft_stcksize(*stacka) - i)
-		{
-			while ((*stacka)->nbr != min(*stacka))
-				ra(stacka, 1);
-		}
-		else
-		{
-				while ((*stacka)->nbr != min(*stacka))
-				rra(stacka, 1);
-		}
-	}
-}
-int	checksorted(t_stack *stacka)
+int	ft_checksorted(t_stack *stack_a)
 {
 	int	i;
 
-	i = stacka->nbr;
-	while (stacka)
+	i = stack_a->nbr;
+	while (stack_a)
 	{
-		if (i > stacka->nbr)
+		if (i > stack_a->nbr)
 			return (0);
-		i = stacka->nbr;
-		stacka = stacka->next;
+		i = stack_a->nbr;
+		stack_a = stack_a->next;
 	}
 	return (1);
 }
 
-void sort_3 (t_stack **stacka)
-{
-	if (min(*stacka) == (*stacka)->nbr)
-	{
-		rra(stacka, 1);
-		sa(stacka, 1);
-	}
-	else if (max(*stacka) == (*stacka)->nbr)
-	{
-		ra(stacka, 1);
-		if (!checksorted(*stacka))
-			sa(stacka, 1);
-	}
-	else
-	{
-		if (ft_index(*stacka, max(*stacka)) == 1)
-			rra(stacka, 1);
-		else
-			sa(stacka, 1);
-	}
-}
-
-t_stack	*sort_b(t_stack **stacka)
-{
-	t_stack	*stackb;
-	
-	stackb = NULL;
-	if (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
-		pb(stacka, &stackb, 1);
-	if (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
-		pb(stacka, &stackb, 1);
-	if (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
-		order_upto_3(stacka, &stackb);
-	if (!checksorted(*stacka))
-		sort_3(stacka);
-	return (stackb);
-}
-
-t_stack	**sort_a(t_stack **stacka, t_stack **stackb)
+// This function sort and push stacks until 3 members left behind.
+void	ft_sort_b_till_3(t_stack **stack_a, t_stack **stack_b)
 {
 	int		i;
 	t_stack	*tmp;
-	
-	
-	while (*stackb)
+
+	while (ft_lstsize(*stack_a) > 3 && !ft_checksorted(*stack_a))
 	{
-		tmp = *stackb;
-		
-		i = best_option_a(*stacka, *stackb);
-		
+		tmp = *stack_a;
+		i = ft_rotate_type_ab(*stack_a, *stack_b);
 		while (i >= 0)
 		{
-			if (i == rarb_casea(*stacka, *stackb, tmp->nbr))
-				i = apply_rarb(stacka, stackb, tmp->nbr, 'b');
-			else if (i == rarrb_casea(*stacka, *stackb, tmp->nbr))
-				i = apply_rarrb(stacka, stackb, tmp->nbr, 'b');
-			else if (i == rrarrb_casea(*stacka, *stackb, tmp->nbr))
-				i = apply_rrarrb(stacka, stackb, tmp->nbr, 'b');
-			else if (i == rrarb_casea(*stacka, *stackb, tmp->nbr))
-				i = apply_rrarb(stacka, stackb, tmp->nbr, 'b');
+			if (i == ft_case_rarb(*stack_a, *stack_b, tmp->nbr))
+				i = ft_apply_rarb(stack_a, stack_b, tmp->nbr, 'a');
+			else if (i == ft_case_rrarrb(*stack_a, *stack_b, tmp->nbr))
+				i = ft_apply_rrarrb(stack_a, stack_b, tmp->nbr, 'a');
+			else if (i == ft_case_rarrb(*stack_a, *stack_b, tmp->nbr))
+				i = ft_apply_rarrb(stack_a, stack_b, tmp->nbr, 'a');
+			else if (i == ft_case_rrarb(*stack_a, *stack_b, tmp->nbr))
+				i = ft_apply_rrarb(stack_a, stack_b, tmp->nbr, 'a');
 			else
 				tmp = tmp->next;
 		}
 	}
-	return (stacka);
 }
 
-void	order_upto_3(t_stack **stacka, t_stack **stackb)
+t_stack	*ft_sort_b(t_stack **stack_a)
 {
-	t_stack	*tmp;
+	t_stack	*stack_b;
+
+	stack_b = NULL;
+	if (ft_lstsize(*stack_a) > 3 && !ft_checksorted(*stack_a))
+		pb(stack_a, &stack_b, 0);
+	if (ft_lstsize(*stack_a) > 3 && !ft_checksorted(*stack_a))
+		pb(stack_a, &stack_b, 0);
+	if (ft_lstsize(*stack_a) > 3 && !ft_checksorted(*stack_a))
+		ft_sort_b_till_3(stack_a, &stack_b);
+	if (!ft_checksorted(*stack_a))
+		ft_sort_three(stack_a);
+	return (stack_b);
+}
+
+
+t_stack	**ft_sort_a(t_stack **stack_a, t_stack **stack_b)
+{
 	int		i;
-	
-	while (ft_stcksize(*stacka) > 3 && !checksorted(*stacka))
+	t_stack	*tmp;
+
+	while (*stack_b)
 	{
-		tmp = *stacka;
-		i = best_option_b(*stacka, *stackb);
-		while(i >= 0)
+		tmp = *stack_b;
+		i = ft_rotate_type_ba(*stack_a, *stack_b);
+		while (i >= 0)
 		{
-			if (i == rarb_caseb(*stacka, *stackb, tmp->nbr))
-				i = apply_rarb (stacka, stackb, tmp->nbr, 'a');
-			else if (i == rrarrb_caseb(*stacka, *stackb, tmp->nbr))
-				i = apply_rrarrb(stacka, stackb, tmp->nbr, 'a');
-			else if (i == rarrb_caseb(*stacka, *stackb, tmp->nbr))
-				i = apply_rarrb(stacka, stackb, tmp->nbr, 'a');
-			else if (i == rrarb_caseb(*stacka, *stackb, tmp->nbr))
-				i = apply_rrarb(stacka, stackb, tmp->nbr, 'a');
+			if (i == ft_case_rarb_a(*stack_a, *stack_b, tmp->nbr))
+				i = ft_apply_rarb(stack_a, stack_b, tmp->nbr, 'b');
+			else if (i == ft_case_rarrb_a(*stack_a, *stack_b, tmp->nbr))
+				i = ft_apply_rarrb(stack_a, stack_b, tmp->nbr, 'b');
+			else if (i == ft_case_rrarrb_a(*stack_a, *stack_b, tmp->nbr))
+				i = ft_apply_rrarrb(stack_a, stack_b, tmp->nbr, 'b');
+			else if (i == ft_case_rrarb_a(*stack_a, *stack_b, tmp->nbr))
+				i = ft_apply_rrarb(stack_a, stack_b, tmp->nbr, 'b');
 			else
 				tmp = tmp->next;
 		}
 	}
+	return (stack_a);
 }
 
-// otro ARCHIVO Y PROBLAMENTE HAYA QUE HACER 2 ARCHIVOS UNO A Y OTRO B 
-int	best_option_b(t_stack *stacka, t_stack *stackb)
+void	sort(t_stack **stack_a)
 {
+	t_stack	*stack_b;
 	int		i;
-	t_stack	*tmp;
 
-	tmp = stacka;
-	i = rrarrb_caseb(stacka, stackb, stacka->nbr);
-	while (tmp)
+	stack_b = NULL;
+	if (ft_lstsize(*stack_a) == 2)
+		sa(stack_a, 0);
+	else
 	{
-		if (i > rarb_caseb(stacka, stackb, tmp->nbr))
-			i = rarb_caseb(stacka, stackb, tmp->nbr);
-		if (i > rrarrb_caseb(stacka, stackb, tmp->nbr))
-			i = rrarrb_caseb(stacka, stackb, tmp->nbr);
-		if (i > rarrb_caseb(stacka, stackb, tmp->nbr))
-			i = rarrb_caseb(stacka, stackb, tmp->nbr);
-		if (i > rrarb_caseb(stacka, stackb, tmp->nbr))
-			i = rrarb_caseb(stacka, stackb, tmp->nbr);
-		tmp = tmp->next;
-	}
-	return (i);
-}
-
-int	best_option_a(t_stack *stacka, t_stack *stackb)
-{
-	int		i;
-	t_stack *tmp;
-	
-	tmp = stackb;
-	i = rrarrb_casea(stacka, stackb, stackb->nbr);
-	while (tmp)
-	{
-		if (i > rarb_casea(stacka, stackb, tmp->nbr))
-			i = rarb_casea(stacka, stackb, tmp->nbr);
-		if (i > rrarrb_casea(stacka, stackb, tmp->nbr))
-			i = rrarrb_casea(stacka, stackb, tmp->nbr);
-		if (i > rarrb_casea(stacka, stackb, tmp->nbr))
-			i = rarrb_casea(stacka, stackb, tmp->nbr);
-		if (i > rrarb_casea(stacka, stackb, tmp->nbr))
-			i = rrarb_casea(stacka, stackb, tmp->nbr);
-		tmp = tmp->next;
-	}
-	return (i);
+		stack_b = ft_sort_b(stack_a);
+		stack_a = ft_sort_a(stack_a, &stack_b);
+		i = ft_find_index(*stack_a, min(*stack_a));
+		if (i < ft_lstsize(*stack_a) - i)
+		{
+			while ((*stack_a)->nbr != min(*stack_a))
+				ra(stack_a, 0);
+		}
+		else
+		{
+			while ((*stack_a)->nbr != min(*stack_a))
+				rra(stack_a, 0);
+		}			
+	}	
 }
