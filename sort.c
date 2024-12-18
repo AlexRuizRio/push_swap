@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 19:09:34 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/18 23:53:37 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/19 00:52:51 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	checksorted(t_stack *stack_a)
 	return (1);
 }
 
-// This function sort and push stacks until 3 members left behind.
 void	sort_b_till_3(t_stack **stack_a, t_stack **stack_b)
 {
 	int		i;

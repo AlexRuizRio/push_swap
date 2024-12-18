@@ -2,7 +2,7 @@
 NAME = push_swap
 CC = gcc
 RM = rm -f
-FLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
+FLAGS = -Wall -Wextra -Werror
 
 SRC = push_swap.c applys.c case_ab.c case_ba.c checker_arg.c \
 enter_data.c func_lists.c get_string.c operators.c operatorstwo.c \

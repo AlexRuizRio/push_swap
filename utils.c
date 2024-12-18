@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 16:42:38 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/18 23:46:36 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/19 00:53:01 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@ int	f_index(t_stack *a, int nbr)
 	return (i);
 }
 
-// This function finds the correct place of the number in stack_b.
-// In other words, it check what index number num will get 
-// after it is being pushed to the stack_b.
 int	find_placeb(t_stack *stack_b, int num)
 {
 	int		i;
