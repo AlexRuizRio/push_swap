@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 16:45:42 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/18 21:26:24 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 23:17:30 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,14 @@ int	store_numbers(char **tmp, long *argi, int *z)
 			return (-1);
 		}
 		argi[(*z)++] = ft_strlong(tmp[j]);
-		free(tmp[j++]);
+		free(tmp[j]);
+		j++;
 	}
 	free(tmp);
 	return (0);
 }
 
-int	sacarstring(int argc, char *argv[], long *argi)
+int	get_string(int argc, char *argv[], long *argi)
 {
 	int		i;
 	int		z;
@@ -102,12 +103,12 @@ int	sacarstring(int argc, char *argv[], long *argi)
 		{
 			tmp = ft_split(argv[i], ' ');
 			if (tmp == NULL || store_numbers(tmp, argi, &z) == -1)
-				return (write(2, "Error\n", 6));
+				return (6);
 		}
 		else
 		{
 			if (!ft_isnumber(argv[i]))
-				return (write(2, "Error\n", 6));
+				return (6);
 			argi[z++] = ft_strlong(argv[i]);
 		}
 		i++;

@@ -6,35 +6,34 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 16:42:23 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/18 21:50:37 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 23:37:06 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "push_swap.h"
+#include "push_swap.h"
 
-int main(int argc, char *argv[]) 
+int	main(int argc, char *argv[])
 {
 	t_stack	*stacka;
-  	int 	i;
-	int 	count;
-	long 	*argi;
+	int		count;
+	long	*argi;
 
 	stacka = NULL;
 	count = parseo (argc, argv);
 	argi = malloc(count * sizeof(long));
-	if(argi == NULL)
-		return(-1);
-	if (sacarstring(argc, argv, argi) == 6)
-		return (-1);
-  	i = checker_arg(count, argi);
-  	if(i == 6)
-		return(-1);
+	if (argi == NULL)
+		return (write(2, "Error\n", 6));
+	if (get_string(argc, argv, argi) == 6 || checker_arg(count, argi) == 6)
+	{
+		free(argi);
+		return (write(2, "Error\n", 6));
+	}
 	enter_data(count, argi, &stacka);
 	free(argi);
-	if (!ft_checksorted(stacka))
+	if (!checksorted(stacka))
 		sort(&stacka);
-	//free(&stacka);
-  return (i);
+	ft_stckclear (&stacka);
+	return (0);
 }
 
 t_stack	*ft_lstlast(t_stack *lst)
@@ -57,4 +56,19 @@ int	ft_lstsize(t_stack *lst)
 		i++;
 	}
 	return (i);
+}
+
+void	ft_free(t_stack **lst)
+{
+	t_stack	*tmp;
+
+	if (!lst)
+		return ;
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		(*lst)->nbr = 0;
+		free(*lst);
+		*lst = tmp;
+	}
 }

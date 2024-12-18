@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:06:42 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/18 17:43:43 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 22:41:04 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_stack	*ft_stcknew(long content, long index)
 	return (node);
 }
 
-void	ft_stckadd_back(t_stack **lst, t_stack *new, t_stack *former)
+void	ft_stckadd_back(t_stack **lst, t_stack *new)
 {
 	t_stack	*temp;
 
@@ -46,9 +46,12 @@ void	ft_stckclear(t_stack **lst)
 {
 	t_stack	*tem;
 
+	if (!lst)
+		return ;
 	while (*lst)
 	{
 		tem = *lst;
+		(*lst)->nbr = 0;
 		*lst = (*lst)->next;
 		free(tem);
 	}

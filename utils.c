@@ -6,13 +6,13 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 16:42:38 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/18 21:57:10 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 23:46:36 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	ft_find_index(t_stack *a, int nbr)
+int	f_index(t_stack *a, int nbr)
 {
 	int		i;
 
@@ -38,7 +38,7 @@ int	find_placeb(t_stack *stack_b, int num)
 	if (num > stack_b->nbr && num < ft_stcklast(stack_b)->nbr)
 		i = 0;
 	else if (num > max(stack_b) || num < min(stack_b))
-		i = ft_find_index(stack_b, max(stack_b));
+		i = f_index(stack_b, max(stack_b));
 	else
 	{
 		tmp = stack_b->next;
@@ -52,9 +52,6 @@ int	find_placeb(t_stack *stack_b, int num)
 	return (i);
 }
 
-// This function finds the correct place of the number in stack_a.
-// In other words, it check what index number num will get 
-// after it is being pushed to the stack_a.
 int	find_placea(t_stack *stack_a, int num)
 {
 	int		i;
@@ -64,7 +61,7 @@ int	find_placea(t_stack *stack_a, int num)
 	if (num < stack_a->nbr && num > ft_stcklast(stack_a)->nbr)
 		i = 0;
 	else if (num > max(stack_a) || num < min(stack_a))
-		i = ft_find_index(stack_a, min(stack_a));
+		i = f_index(stack_a, min(stack_a));
 	else
 	{
 		tmp = stack_a->next;

@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:11:26 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/18 20:21:29 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 23:34:29 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	rb(t_stack **b, int j)
 	if (j == 0)
 		write(1, "rb\n", 3);
 }
-
 
 void	sb(t_stack **b, int j)
 {

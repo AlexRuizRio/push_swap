@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:11:26 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/18 20:21:07 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 23:40:55 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,6 @@ void	rrr(t_stack **a, t_stack **b, int j)
 	rrr_sub(b, j);
 }
 
-// pb (push b) : take the first element at the top of a and put it 
-// at the top of b. Do nothing if a is empty.
 void	pb(t_stack **stack_a, t_stack **stack_b, int j)
 {
 	t_stack	*tmp;
