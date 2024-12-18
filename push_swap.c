@@ -186,7 +186,7 @@ int main(int argc, char *argv[])
 	if (!checksorted(stacka))
 		sort(&stacka);
 
-	while(stacka->next != NULL) // Comprobacion de que se añaden BORRAR
+	while(stacka->next != NULL)
 	{
 		printf("%ld ", stacka->nbr);
 		stacka = stacka->next;

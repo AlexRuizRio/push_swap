@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:06:42 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/17 22:55:25 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 00:38:46 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_stack	*ft_stcknew(long content, long index)
 {
 	t_stack	*node;
 
-	node = (t_stack *)malloc(sizeof(t_stack));
+	node = malloc(sizeof(t_stack));
 	if (node == NULL)
 		return (NULL);
 	node->nbr = content;
@@ -60,7 +60,7 @@ t_stack	*ft_stcklast(t_stack *lst)
 {
 	if (!lst)
 		return (NULL);
-	while (lst->next != NULL)
+	while (lst->next)
 		lst = lst->next;
 	return (lst);
 }
