@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:17:28 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/18 23:57:52 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/19 01:19:26 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int		ft_lstsize(t_stack *lst);
 int		f_index(t_stack *a, int nbr);
 int		find_placeb(t_stack *stack_b, int num);
 int		find_placea(t_stack *a, int nbr);
-void	sort(t_stack **stack_a);
-void	sort_three(t_stack **stack_a);
+void	sort(t_stack **stacka);
+void	sort_three(t_stack **stacka);
 int		case_rarb_a(t_stack *a, t_stack *b, int c);
 int		case_rrarrb_a(t_stack *a, t_stack *b, int c);
 int		case_rarrb_a(t_stack *a, t_stack *b, int c);
@@ -71,12 +71,12 @@ int		case_rarb(t_stack *a, t_stack *b, int c);
 int		case_rrarrb(t_stack *a, t_stack *b, int c);
 int		case_rrarb(t_stack *a, t_stack *b, int c);
 int		case_rarrb(t_stack *a, t_stack *b, int c);
-int		rotate_type_ab(t_stack *a, t_stack *b);
-int		rotate_type_ba(t_stack *a, t_stack *b);
+int		rotate_ab(t_stack *a, t_stack *b);
+int		rotate_ba(t_stack *a, t_stack *b);
 int		apply_rarb(t_stack **a, t_stack **b, int c, char ab);
 int		apply_rrarrb(t_stack **a, t_stack **b, int c, char ab);
 int		apply_rrarb(t_stack **a, t_stack **b, int c, char ab);
 int		apply_rarrb(t_stack **a, t_stack **b, int c, char ab);
-void	sort_b_till_3(t_stack **stack_a, t_stack **stack_b);
+void	sort_upto_3(t_stack **stacka, t_stack **stackb);
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 16:52:48 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/18 23:45:59 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/19 01:19:06 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	rotate_type_ba(t_stack *a, t_stack *b)
+int	rotate_ba(t_stack *a, t_stack *b)
 {
 	int		i;
 	t_stack	*tmp;
@@ -34,7 +34,7 @@ int	rotate_type_ba(t_stack *a, t_stack *b)
 	return (i);
 }
 
-int	rotate_type_ab(t_stack *a, t_stack *b)
+int	rotate_ab(t_stack *a, t_stack *b)
 {
 	int		i;
 	t_stack	*tmp;
@@ -56,24 +56,24 @@ int	rotate_type_ab(t_stack *a, t_stack *b)
 	return (i);
 }
 
-void	sort_three(t_stack **stack_a)
+void	sort_three(t_stack **stacka)
 {
-	if (min(*stack_a) == (*stack_a)->nbr)
+	if (min(*stacka) == (*stacka)->nbr)
 	{
-		rra(stack_a, 0);
-		sa(stack_a, 0);
+		rra(stacka, 0);
+		sa(stacka, 0);
 	}
-	else if (max(*stack_a) == (*stack_a)->nbr)
+	else if (max(*stacka) == (*stacka)->nbr)
 	{
-		ra(stack_a, 0);
-		if (!checksorted(*stack_a))
-			sa(stack_a, 0);
+		ra(stacka, 0);
+		if (!checksorted(*stacka))
+			sa(stacka, 0);
 	}
 	else
 	{
-		if (f_index(*stack_a, max(*stack_a)) == 1)
-			rra(stack_a, 0);
+		if (f_index(*stacka, max(*stacka)) == 1)
+			rra(stacka, 0);
 		else
-			sa(stack_a, 0);
+			sa(stacka, 0);
 	}
 }
