@@ -6,7 +6,7 @@
 /*   By: alruiz-d <alruiz-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 16:42:23 by alruiz-d          #+#    #+#             */
-/*   Updated: 2024/12/18 23:37:06 by alruiz-d         ###   ########.fr       */
+/*   Updated: 2024/12/22 19:46:55 by alruiz-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	main(int argc, char *argv[])
 	long	*argi;
 
 	stacka = NULL;
+	if (argc < 2)
+		return (-1);
 	count = parseo (argc, argv);
 	argi = malloc(count * sizeof(long));
 	if (argi == NULL)
